@@ -1,0 +1,125 @@
+<?xml version  =  "1.0"?>
+<root>
+	<startingPosition name = "1">
+	    <pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">ShoCro-1</pattern>
+		<pattern name = "3">ShoCro-1</pattern>
+		<pattern name = "4">ShoCro-1</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	<startingPosition name = "2">
+		<pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">ShoCro-2</pattern>
+		<pattern name = "3">ShoAlg-2</pattern>
+		<pattern name = "4">ShoCro-2</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	<startingPosition name = "3">
+		<pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">ShoCro-2</pattern>
+		<pattern name = "3">ShoAlg-2</pattern>
+		<pattern name = "4">ConBomnt-2</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	<startingPosition name = "4">
+		<pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">CrossAuto</pattern>
+		<pattern name = "3">CrossAuto</pattern>
+		<pattern name = "4">CrossAuto</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	<startingPosition name = "5">
+		<pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">CrossAuto</pattern>
+		<pattern name = "3">CrossAuto</pattern>
+		<pattern name = "4">CrossAuto</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	<startingPosition name = "6">
+		<pattern name = "1">CrossAuto</pattern>
+		<pattern name = "2">CrossAuto</pattern>
+		<pattern name = "3">CrossAuto</pattern>
+		<pattern name = "4">CrossAuto</pattern>
+		<pattern name = "5">CrossAuto</pattern>
+		<pattern name = "6">CrossAuto</pattern>
+	</startingPosition>
+	
+	<patternCommands name = "CrossAuto">
+		<command name = "driveDistance">-12</command>
+	</patternCommands>
+	
+	<patternCommands name = "ShoCro-3">
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">-45</command>
+		<command name = "driveDistance">-12</command>
+	</patternCommands>
+	<patternCommands name = "ShoCro-2">
+		<command name = "Shooter">5</command>
+		<command name = "driveDistance">12</command>
+	</patternCommands>
+	<patternCommands name = "ShoCro-1">
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">45</command>
+		<command name = "driveDistance">-12</command>
+	</patternCommands>
+	
+	<patternCommands name = "ShoAlg-3">
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">-45</command>
+		<command name = "driveDistance">-224.59</command>
+	</patternCommands>
+	<patternCommands name = "ShoAlg-2">
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">-45</command>
+		<command name = "driveDistance">10</command>
+		<command name = "turnToAngle">90</command>
+		<command name = "driveDistance">-224.59</command>
+	</patternCommands>
+	
+	<patternCommands name = "ConBomnt-3">
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">-45</command>
+		<command name = "driveDistance">-224.59</command>
+		<command name = "wait">2</command>
+		<command name = "driveDistance">-224.59</command>
+		<command name = "Shooter">5</command>
+		<command name = "turnToAngle">-45</command>
+	</patternCommands>
+	
+	
+	
+	<patternCommands name = "Simple-one">
+		<command name = "turnToAngle">5</command>
+	</patternCommands>
+	<patternCommands name = "Simple-two">
+		<command name = "driveDistance">96</command>
+	</patternCommands>
+	<patternCommands name = "Simple-three">
+		<command name = "wait">20</command>
+	</patternCommands>
+	<patternCommands name = "Simple-four">
+		<command name = "feedHooper"></command>
+	</patternCommands>
+	<patternCommands name = "Simple-four">
+		<command name = "hooper"></command>
+	</patternCommands>
+	<patternCommands name = "Simple-Five">
+		<command name = "shooper">10</command>
+	</patternCommands>
+	<patternCommands name = "Complex-one">
+		<command name = "driveDistance">18</command>
+		<command name = "turnToAngle">10</command>
+		<command name = "driveDistance">12</command>
+	</patternCommands>	
+	<patternCommands name = "TestPattern-Commbine">
+		<command name = "commbineDown"></command>
+		<command name = "commbineOn"></command>
+		<command name = "wait">15</command>
+		<command name = "commbineOff"></command>
+	</patternCommands>
+</root>
