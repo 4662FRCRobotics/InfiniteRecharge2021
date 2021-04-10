@@ -10,21 +10,20 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.WheelOfFortuneRotator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.button.InternalButton;
+//import edu.wpi.first.wpilibj2.command.button.InternalButton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+//import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
-import frc.robot.Constants.ContestantConstants.Direction;
+//import frc.robot.Constants.ContestantConstants.Direction;
 
 
 
@@ -46,7 +45,7 @@ public class RobotContainer {
   private final Joystick m_driveStick = new Joystick(0);
   private final Joystick m_stationConsole = new Joystick(1);
   
-  private final WheelOfFortuneRotator m_contestant = new WheelOfFortuneRotator();
+  //private final WheelOfFortuneRotator m_contestant = new WheelOfFortuneRotator();
 
   private final Climb m_climb = new Climb();
   
@@ -83,28 +82,14 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driveStick, ButtonMappings.kROTATION_CONTROL).whenPressed(  // Rotation control
-        new ColorWheelRotationControl(m_contestant));
-    new JoystickButton(m_driveStick, ButtonMappings.kPOSITION_CONTROL).whenPressed(  // Position control
-        new ColorWheelPositionControl(m_contestant));
-    
-    new JoystickButton(m_driveStick, ButtonMappings.kWHEEL_OF_FORTUNE_CW).whileHeld(  // Override CW
-        new WheelOfFortuneRotate(m_contestant, Direction.CCW));
-    new JoystickButton(m_driveStick, ButtonMappings.kWHEEL_OF_FORTUNE_CCW).whileHeld(  // Override CCW
-      new WheelOfFortuneRotate(m_contestant, Direction.CW));
-
-
+  
     new JoystickButton(m_driveStick, ButtonMappings.kSHOOTER)
-     // .whenPressed(() -> m_vision.setServoShooter())
-      .whileHeld(
+    .whileHeld(
         new ParallelCommandGroup(
           new ShootPowerCells(m_hopper, m_shooter, m_vision, m_driveStick),
           new VisionLightOn(m_vision)
         )
       );
-      //.whenReleased(() -> m_vision.setServoDown());
-
-    //new JoystickButton(m_driveStick, ButtonMappings.kSHOOTER).whileHeld(new CombineOnGroup(m_intake));
 
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_UP)
     .whileHeld(
@@ -117,24 +102,10 @@ public class RobotContainer {
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_DOWN).whileHeld(
       new ClimbDown(m_climb));
     
-    new Trigger(m_hopper::shouldHopperTurnOn).whenActive(
-      new RotateHopper(m_hopper)
-    );
-
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_SWITCH)
     .whenPressed(() -> m_vision.setServoUp())
     .whenReleased(() -> m_vision.setServoDown());
-
-    new JoystickButton(m_driveStick, ButtonMappings.kHARVESTER_REVERSE)
-    .whenPressed(() -> m_intake.SpinnerReverse())
-    .whenReleased(() -> m_intake.SpinnerOff());
-
-    /*
-    new Trigger(m_hopper::shouldIntakeTurnOn).whenActive(
-      new HarvestPowerCells(m_hopper, m_intake)
-    );
-    */
-    
+  
     new  JoystickButton(m_driveStick, ButtonMappings.kLOADER)
     .whileHeld(
       new HarvestPowerCells(m_hopper, m_intake)
@@ -142,10 +113,6 @@ public class RobotContainer {
 
     new JoystickButton(m_driveStick, ButtonMappings.kVISION_ON).whileHeld(
       new VisionLightOn(m_vision));
-  }
-
-  public void zeroHopperEncoder(){
-    m_hopper.zeroHopperEncoder();
   }
 
   /**

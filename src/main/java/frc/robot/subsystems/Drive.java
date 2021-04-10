@@ -17,7 +17,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.EncoderType;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
+//import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -69,10 +69,10 @@ public class Drive extends SubsystemBase {
 
     m_robotDrive = new DifferentialDrive(m_leftControlGroup, m_rightControlGroup);
 
-    //m_leftEncoder1 = m_leftController1.getEncoder();
-    //m_rightEncoder1 = m_rightController1.getEncoder();
-    m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
-    m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
+    m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
+    m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
+  //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
+  //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
 
     m_leftController1.setIdleMode(CANSparkMax.IdleMode.kCoast);
     m_leftController2.setIdleMode(CANSparkMax.IdleMode.kCoast);

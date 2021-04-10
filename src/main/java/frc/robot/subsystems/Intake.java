@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
@@ -17,30 +19,32 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
 
   private String m_ArmStatus;
-  private String m_ArmStopPosition;
   private String m_SpinnerStatus;
-  private boolean m_isArmDown;
 
-  private WPI_VictorSPX m_beltMotor;
+  private WPI_TalonSRX m_beltMotor;
+  private DoubleSolenoid m_IntakeDeploy;
   // private WPI_TalonSRX m_harvesterMotor;
   /**
    * Creates a new Intake.
    */
   public Intake() {
-    m_isArmDown = false;
-    m_ArmStatus = "initial";
+     m_ArmStatus = "initial";
     m_SpinnerStatus = "initial";
 
-    m_beltMotor = new WPI_VictorSPX(IntakeConstants.kBELT_MOTOR_PORT);
+    m_beltMotor = new WPI_TalonSRX(IntakeConstants.kBELT_MOTOR_PORT);
     m_beltMotor.configFactoryDefault();
+
+    m_IntakeDeploy = new DoubleSolenoid(IntakeConstants.kINTAKE_DOWN, IntakeConstants.kINTAKE_UP);
   }
 
-  private void ArmUp() {
+  public void ArmUp() {
     m_ArmStatus = "Moving Up";
+    m_IntakeDeploy.set(Value.kReverse);
   }
 
   public void ArmDown() {
     m_ArmStatus = "Moving Down";
+    m_IntakeDeploy.set(Value.kForward);
   }
   
   public void ArmStop() {
@@ -95,7 +99,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void beltOff(){
-    m_beltMotor.set(0);
+    m_beltMotor.stopMotor();
     SmartDashboard.putBoolean("Feeder Belt", false);
   }
 
