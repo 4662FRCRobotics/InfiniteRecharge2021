@@ -17,10 +17,7 @@ package frc.robot;
  */
 public final class Constants {
     public static final class ButtonMappings {
-        public static final int kROTATION_CONTROL = 4;
-        public static final int kPOSITION_CONTROL = 6;
-        public static final int kWHEEL_OF_FORTUNE_CW = 12;
-        public static final int kWHEEL_OF_FORTUNE_CCW = 11;
+        
         public static final int kSHOOTER = 1;
 
         public static final int kLOADER = 2;
@@ -31,7 +28,7 @@ public final class Constants {
         
         public static final int kCLIMB_SWITCH = 9;
 
-        public static final int kHARVESTER_REVERSE = 10;
+        //public static final int kHARVESTER_REVERSE = 10;
     }
 
     public static final class ContestantConstants {
