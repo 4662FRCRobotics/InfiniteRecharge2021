@@ -21,34 +21,49 @@ public class HarvestPowerCells extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_hopper = hopper;
     m_intake = intake;
-    addRequirements(m_intake);
+    addRequirements(m_intake, m_hopper);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    if (m_hopper.shouldIntakeTurnOn()) {
+      //extend intake
+      //extend hopper
+      m_hopper.extendBeltFrame();
+      m_intake.beltOn();
+      m_hopper.setHopperMotorOn();
+    }
+    //if the hopper is full just exit
+    //if the belt frame is down then extend it out
+    //start belts
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_hopper.shouldIntakeTurnOn()){
+  /*  if (m_hopper.shouldIntakeTurnOn()){
       m_intake.beltOn();
     } else {
       m_intake.beltOff();
     }
+    */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_intake.beltOff();
+    m_hopper.setHopperMotorOff();
+    if (!interrupted) {
+      m_hopper.retractBeltFrame();
+    // and intake
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_hopper.isBallAtShooter();
   }
 }

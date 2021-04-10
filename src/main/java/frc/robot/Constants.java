@@ -140,6 +140,8 @@ public final class Constants {
         public static final double kHOPPER_SPEED = -0.5;
         public static final double kHOPPER_ZERO_SPEED = 0;
         public static final double kDISTANCE_THRESHOLD = 10.0;
+        public static final int kBELT_FRAME_OUT = 0;
+        public static final int kBELT_FRAME_IN = 1;
     }
 
     public static final class ShooterConstants {
@@ -171,5 +173,7 @@ public final class Constants {
     public static final class IntakeConstants{
         public static final int kBELT_MOTOR_PORT = 11;
         public static final double kBELT_MOTOR_SPEED = -0.5;
+        public static final int kINTAKE_DOWN = 2;
+        public static final int kINTAKE_UP = 3;
     } 
 }
