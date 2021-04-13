@@ -16,6 +16,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    public static final class Common {
+        public static final int kPCM_PORT = 1;
+    }
+
     public static final class ButtonMappings {
         
         public static final int kSHOOTER = 1;

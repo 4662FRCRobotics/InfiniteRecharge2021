@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Common;
 import frc.robot.Constants.HopperConstants;
 
 public class Hopper extends SubsystemBase{
@@ -31,7 +32,7 @@ public class Hopper extends SubsystemBase{
     m_hopperMotor = new WPI_TalonSRX(HopperConstants.kHOPPER_MOTOR_PORT);
     m_shooterSensor = new DigitalInput(HopperConstants.kSHOOTER_SENSOR_PORT);
     m_intakeSensor = new DigitalInput(HopperConstants.kINTAKE_SENSOR_PORT);
-    m_beltFramePiston = new DoubleSolenoid(HopperConstants.kBELT_FRAME_OUT, HopperConstants.kBELT_FRAME_IN);
+    m_beltFramePiston = new DoubleSolenoid(Common.kPCM_PORT, HopperConstants.kBELT_FRAME_OUT, HopperConstants.kBELT_FRAME_IN);
     
     m_hopperMotor.configFactoryDefault();
 
