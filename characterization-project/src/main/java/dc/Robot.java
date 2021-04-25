@@ -38,7 +38,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-  static private double WHEEL_DIAMETER = 0.333;
+  static private double WHEEL_DIAMETER = 0.665;
   static private double GEARING = 17.857;
   static private int PIDIDX = 0;
 
@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
 
     // Note that the angle from the NavX and all implementors of wpilib Gyro
     // must be negated because getAngle returns a clockwise positive angle
-    AHRS navx = new AHRS(SPI.Port.kMXP);
+    AHRS navx = new AHRS(SerialPort.Port.kMXP);
     gyroAngleRadians = () -> -1 * Math.toRadians(navx.getAngle());
 
     //

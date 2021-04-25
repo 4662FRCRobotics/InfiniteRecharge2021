@@ -15,7 +15,7 @@
     # a fraction [motor turns]/[wheel turns]
     "gearing": 17.857,
     # Wheel diameter (in units of your choice - will dictate units of analysis)
-    "wheelDiameter": 0.333,
+    "wheelDiameter": 0.665,
     # Your gyro type (one of "NavX", "Pigeon", "ADXRS450", "AnalogGyro", or "None")
     "gyroType": "NavX",
     # Whatever you put into the constructor of your gyro
@@ -26,6 +26,7 @@
     # "0" (Pigeon CAN ID or AnalogGyro channel),
     # "new WPI_TalonSRX(3)" (Pigeon on a Talon SRX),
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
-    "gyroPort": "SPI.Port.kMXP",
+    "gyroPort": "SerialPort.Port.kMXP",
 }
+
 
