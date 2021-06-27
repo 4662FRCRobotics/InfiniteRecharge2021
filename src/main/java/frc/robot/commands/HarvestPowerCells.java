@@ -30,6 +30,7 @@ public class HarvestPowerCells extends CommandBase {
     if (m_hopper.shouldIntakeTurnOn()) {
       //extend intake
       //extend hopper
+      m_intake.ArmDown();
       m_hopper.extendBeltFrame();
       m_intake.beltOn();
       m_hopper.setHopperMotorOn();
@@ -57,6 +58,7 @@ public class HarvestPowerCells extends CommandBase {
     m_hopper.setHopperMotorOff();
     if (!interrupted) {
       m_hopper.retractBeltFrame();
+      m_intake.ArmUp();
     // and intake
     }
   }

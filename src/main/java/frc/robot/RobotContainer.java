@@ -7,24 +7,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+//import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import edu.wpi.first.wpilibj2.command.button.Trigger;
-//import edu.wpi.first.wpilibj2.command.button.InternalButton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-//import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
-//import frc.robot.Constants.ContestantConstants.Direction;
-
 
 
 /**
@@ -36,7 +30,7 @@ import frc.robot.Constants.ButtonMappings;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drive m_drive = new Drive();
-  private final Autonomous m_autonomous = new Autonomous();
+  //private final Autonomous m_autonomous = new Autonomous();
   private final Hopper m_hopper = new Hopper();
   private final Shooter m_shooter = new Shooter();
   public final Vision m_vision = new Vision();
@@ -45,11 +39,10 @@ public class RobotContainer {
   private final Joystick m_driveStick = new Joystick(0);
   private final Joystick m_stationConsole = new Joystick(1);
   
-  //private final WheelOfFortuneRotator m_contestant = new WheelOfFortuneRotator();
-
   private final Climb m_climb = new Climb();
   
-  private final CommandBase m_AutoCmd = new StartAutoCmd(m_autonomous, m_drive, m_intake, m_shooter, m_hopper, m_vision, () -> m_stationConsole.getPOV(0),() -> m_stationConsole.getPOV(1));
+  //private final CommandBase m_AutoCmd = new StartAutoCmd(m_autonomous, m_drive, m_intake, m_shooter, m_hopper, m_vision, () -> m_stationConsole.getPOV(0),() -> m_stationConsole.getPOV(1));
+  private final CommandBase m_AutoCmd = null;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -70,6 +63,10 @@ public class RobotContainer {
         () -> m_driveStick.getY(),
         () -> m_driveStick.getTwist(),
         () -> m_driveStick.getThrottle()));
+
+    //create the auto commands
+    // note that building path following during auto is significant elapsed time
+    // possibly use a map (lob) array to store commands
 
   }
 
@@ -122,6 +119,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    // use the station console auto switches to determine the commmand to execute
     return m_AutoCmd;
   }
 }
