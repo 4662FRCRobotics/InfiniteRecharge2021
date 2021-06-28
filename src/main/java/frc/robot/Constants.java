@@ -33,7 +33,7 @@ public final class Constants {
         
         public static final int kCLIMB_SWITCH = 9;
 
-        //public static final int kHARVESTER_REVERSE = 10;
+        public static final int kHARVESTER_REVERSE = 10;
     }
 
     public static final class ContestantConstants {
@@ -135,9 +135,9 @@ public final class Constants {
         public static final int kHOPPER_MOTOR_PORT = 8; // Arbitrary number for now
         public static final int kSHOOTER_SENSOR_PORT = 0;
         public static final int kINTAKE_SENSOR_PORT = 1;
-        public static final int kHOPPER_ENCODER_PORT = 3;
-        public static final double kDISTANCE_PER_ROTATION = 6.0;
-        public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
+        //public static final int kHOPPER_ENCODER_PORT = 3;
+        //public static final double kDISTANCE_PER_ROTATION = 6.0;
+        //public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
         //public static final int kHOPPER_AT_INTAKE_PORT = 2;
         public static final double kHOPPER_SPEED = -0.5;
         public static final double kHOPPER_ZERO_SPEED = 0;
