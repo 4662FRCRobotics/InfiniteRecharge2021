@@ -9,6 +9,7 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.*;
+import frc.robot.libraries.ConsoleCommand;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
 
@@ -35,9 +37,10 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   public final Vision m_vision = new Vision();
   private final Intake m_intake = new Intake();
+  private final ConsoleCommand m_consoleCommand = new ConsoleCommand();
 
   private final Joystick m_driveStick = new Joystick(0);
-  private final Joystick m_stationConsole = new Joystick(1);
+  private final Joystick m_console = new Joystick(1);
   
   private final Climb m_climb = new Climb();
   
@@ -63,6 +66,13 @@ public class RobotContainer {
         () -> m_driveStick.getY(),
         () -> m_driveStick.getTwist(),
         () -> m_driveStick.getThrottle()));
+
+      
+    m_vision.setDefaultCommand(
+      new FwdCameraTilt(m_vision,
+        () -> m_console.getY()
+      )
+    );
 
     //create the auto commands
     // note that building path following during auto is significant elapsed time
@@ -99,9 +109,9 @@ public class RobotContainer {
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_DOWN).whileHeld(
       new ClimbDown(m_climb));
     
-    new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_SWITCH)
-    .whenPressed(() -> m_vision.setServoUp())
-    .whenReleased(() -> m_vision.setServoDown());
+    //new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_SWITCH)
+    //.whenPressed(() -> m_vision.setServoUp())
+    //.whenReleased(() -> m_vision.setServoDown());
   
     new  JoystickButton(m_driveStick, ButtonMappings.kLOADER)
     .whileHeld(
@@ -112,6 +122,13 @@ public class RobotContainer {
       new VisionLightOn(m_vision));
   }
 
+  public void getAutonomousName() {
+    // An ExampleCommand will run in autonomous
+    // lamda for pov - "() -> m_Console.getPOV(0)"
+    String commandName = m_consoleCommand.getPatternName(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
+    SmartDashboard.putString("Auto Name", commandName);
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -120,6 +137,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // use the station console auto switches to determine the commmand to execute
-    return m_AutoCmd;
+    String commandName = m_consoleCommand.getPatternName(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
+    SmartDashboard.putString("Auto Name", commandName);
+    Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
+    Boolean bIsCommandFound = autoCommand != null;
+    SmartDashboard.putBoolean("Auto Found", bIsCommandFound);
+    return autoCommand;
   }
 }

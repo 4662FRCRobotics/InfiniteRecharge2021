@@ -79,7 +79,7 @@ public class Vision extends SubsystemBase {
     */
   }
 
-  private void setAngle(int angle){
+  public void setAngle(int angle){
     m_camera0Servo.setAngle(angle);
   }
 
