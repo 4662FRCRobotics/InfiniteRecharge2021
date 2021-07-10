@@ -65,7 +65,8 @@ public class RobotContainer {
         m_drive,
         () -> m_driveStick.getY(),
         () -> m_driveStick.getTwist(),
-        () -> m_driveStick.getThrottle()));
+        () -> m_driveStick.getThrottle(),
+        () -> m_console.getX()));
 
       
     m_vision.setDefaultCommand(

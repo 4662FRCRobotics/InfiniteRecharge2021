@@ -24,13 +24,15 @@ public class ArcadeDrive extends CommandBase {
   private final DoubleSupplier m_forward;
   private final DoubleSupplier m_rotation;
   private final DoubleSupplier m_speed;
+  private final DoubleSupplier m_turnRate;
 
-  public ArcadeDrive(Drive subsystem, DoubleSupplier forward, DoubleSupplier rotation, DoubleSupplier speed) {
+  public ArcadeDrive(Drive subsystem, DoubleSupplier forward, DoubleSupplier rotation, DoubleSupplier speed, DoubleSupplier turnRate) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = subsystem;
     m_forward = forward;
     m_rotation = rotation;
     m_speed = speed;
+    m_turnRate = turnRate;
     addRequirements(m_drive);
   }
   /*public double getVelocity(){
@@ -46,7 +48,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble() * 2 / (m_speed.getAsDouble() + 3), m_rotation.getAsDouble() * 2 / (m_speed.getAsDouble() + 3));
+    m_drive.arcadeDrive(m_forward.getAsDouble() * 2 / (m_speed.getAsDouble() + 3), m_rotation.getAsDouble() * 2 / (m_turnRate.getAsDouble() + 3));
   }
 
 }
