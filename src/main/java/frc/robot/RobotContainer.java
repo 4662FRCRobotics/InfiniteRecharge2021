@@ -75,6 +75,9 @@ public class RobotContainer {
       )
     );
 
+    m_hopper.retractBeltFrame();
+    m_intake.ArmUp();
+
     //create the auto commands
     // note that building path following during auto is significant elapsed time
     // possibly use a map (lob) array to store commands

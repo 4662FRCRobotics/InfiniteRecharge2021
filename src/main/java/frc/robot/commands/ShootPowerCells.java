@@ -66,7 +66,7 @@ public class ShootPowerCells extends CommandBase {
     //}
     
   //  if (m_hopper.shouldHopperFeed()){
-      m_hopper.setHopperMotorOn();
+      m_hopper.setHopperMotorLaunch();
   //  } else {
   //    m_hopper.setHopperMotorOff();
   //  }
