@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Common;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
@@ -33,7 +34,7 @@ public class Intake extends SubsystemBase {
     m_beltMotor = new WPI_VictorSPX(IntakeConstants.kBELT_MOTOR_PORT);
     //m_beltMotor.configFactoryDefault();
 
-    m_IntakeDeploy = new DoubleSolenoid(IntakeConstants.kINTAKE_DOWN, IntakeConstants.kINTAKE_UP);
+    m_IntakeDeploy = new DoubleSolenoid(Common.kPCM_PORT,IntakeConstants.kINTAKE_DOWN, IntakeConstants.kINTAKE_UP);
   }
 
   public void ArmUp() {

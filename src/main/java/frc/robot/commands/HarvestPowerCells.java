@@ -27,12 +27,12 @@ public class HarvestPowerCells extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //if (m_hopper.shouldIntakeTurnOn()) {
+    if (m_hopper.shouldIntakeTurnOn()) {
       m_intake.ArmDown();
       m_hopper.extendBeltFrame();
       m_intake.beltOn();
       m_hopper.setHopperMotorIntake();
-    //}
+    }
     //if the hopper is full just exit
     //otherwise extend intake and hopper and 
     //start intake and hopper feeds
@@ -48,16 +48,16 @@ public class HarvestPowerCells extends CommandBase {
   public void end(boolean interrupted) {
     m_intake.beltOff();
     m_hopper.setHopperMotorOff();
-    //if (!interrupted) {
+    if (!interrupted) {
       m_hopper.retractBeltFrame();
       m_intake.ArmUp();
-    //}
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    //return m_hopper.isBallAtShooter();
+    //return false;
+    return m_hopper.isBallAtShooter();
   }
 }

@@ -144,7 +144,7 @@ public final class Constants {
         public static final double kHOPPER_LAUNCH_SPEED = 0.3;
         public static final double kHOPPER_ZERO_SPEED = 0;
         public static final double kDISTANCE_THRESHOLD = 10.0;
-        public static final int kBELT_FRAME_OUT = 0;
+        public static final int kBELT_FRAME_OUT = 4;
         public static final int kBELT_FRAME_IN = 1;
     }
 

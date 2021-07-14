@@ -86,11 +86,11 @@ public class Hopper extends SubsystemBase{
   }
 
   public boolean isBallAtShooter() {
-    return m_bIsAtShooter;
+    return !m_bIsAtShooter;
   }
 
   public boolean shouldIntakeTurnOn(){
-    return !(m_bIsAtShooter && m_bIsAtIntake);
+    return m_bIsAtShooter || m_bIsAtIntake;
   }
 
   //public boolean shouldHopperFeed(){
