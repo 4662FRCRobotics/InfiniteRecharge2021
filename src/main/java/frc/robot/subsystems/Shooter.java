@@ -43,8 +43,8 @@ public class Shooter extends SubsystemBase {
   }
 
   private void setMotor(double speed){
-    m_shooterMotor0.set(speed * ShooterConstants.kSHOOTER_DIRECTION);
-    m_shooterMotor1.set(speed * -ShooterConstants.kSHOOTER_DIRECTION);
+    m_shooterMotor0.set(speed * 1.0 * ShooterConstants.kSHOOTER_DIRECTION);
+    m_shooterMotor1.set(speed * .9 * -ShooterConstants.kSHOOTER_DIRECTION);
   }
 
   public void setMotorOn(double throttle){

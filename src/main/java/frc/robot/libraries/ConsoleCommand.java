@@ -82,8 +82,8 @@ public class ConsoleCommand {
     int iPattern = pattern.getAsInt() / ConsoleCommandConstants.kPOV_INTERVAL;
     String patternName = ConsoleCommandConstants.kDEFAULT_PATTERN_NAME;
 
-    if (iPosition <= ConsoleCommandConstants.kPOS_PATTERN_NAME.length) {
-      if (iPattern <= ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition].length) {
+    if (iPosition < ConsoleCommandConstants.kPOS_PATTERN_NAME.length) {
+      if (iPattern < ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition].length) {
         patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition][iPattern];
       }
     }

@@ -9,6 +9,7 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.libraries.ConsoleCommand;
 import frc.robot.subsystems.*;
@@ -97,7 +99,8 @@ public class RobotContainer {
     new JoystickButton(m_driveStick, ButtonMappings.kSHOOTER)
     .whileHeld(
         new ParallelCommandGroup(
-          new ShootPowerCells(m_hopper, m_shooter, m_vision, m_driveStick),
+          new ShootPowerCells(m_shooter, m_driveStick),
+          new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper)),
           new VisionLightOn(m_vision)
         )
       );
@@ -120,6 +123,16 @@ public class RobotContainer {
     new  JoystickButton(m_driveStick, ButtonMappings.kLOADER)
     .whileHeld(
       new HarvestPowerCells(m_hopper, m_intake)
+    );
+
+    new JoystickButton(m_driveStick, ButtonMappings.kLOADERSPIT)
+    .whileHeld(
+      new SpitPowerCells(m_intake)
+    );
+
+    new JoystickButton(m_driveStick, ButtonMappings.kCLOSELOADER)
+    .whenPressed(
+      new CloseLoader(m_hopper, m_intake)
     );
 
     new JoystickButton(m_driveStick, ButtonMappings.kVISION_ON).whileHeld(

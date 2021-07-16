@@ -26,8 +26,10 @@ public final class Constants {
         public static final int kSHOOTER = 1;
 
         public static final int kLOADER = 2;
+        public static final int kCLOSELOADER = 3;
+        public static final int kLOADERSPIT = 4;
         public static final int kCLIMB_UP = 5;
-        public static final int kCLIMB_DOWN = 3;
+        public static final int kCLIMB_DOWN = 6;
         public static final int kVISION_ON = 8;
         public static final int kVISION_DOWN = 7;
         
@@ -140,7 +142,7 @@ public final class Constants {
         //public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
         //public static final int kHOPPER_AT_INTAKE_PORT = 2;
         public static final double kHOPPER_SPEED = 0.55;
-        public static final double kHOPPER_INTAKE_SPEED = 0.5;
+        public static final double kHOPPER_INTAKE_SPEED = 0.6;
         public static final double kHOPPER_LAUNCH_SPEED = 0.3;
         public static final double kHOPPER_ZERO_SPEED = 0;
         public static final double kDISTANCE_THRESHOLD = 10.0;
@@ -152,7 +154,7 @@ public final class Constants {
         public static final int kSHOOTER_MOTOR0_PORT = 9;
         public static final int kSHOOTER_MOTOR1_PORT = 10;
 
-        public static final double kSHOOTER_SPEED = -.6;
+        public static final double kSHOOTER_SPEED = -.9;
         public static final double kSHOOTER_ZERO_SPEED = 0;
 
         public static final int kSHOOTER_DIRECTION = 1;
@@ -176,7 +178,7 @@ public final class Constants {
     }
     public static final class IntakeConstants{
         public static final int kBELT_MOTOR_PORT = 11;
-        public static final double kBELT_MOTOR_SPEED = -0.5;
+        public static final double kBELT_MOTOR_SPEED = -0.3;
         public static final int kINTAKE_DOWN = 2;
         public static final int kINTAKE_UP = 3;
     } 
