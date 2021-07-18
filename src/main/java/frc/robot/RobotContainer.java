@@ -83,6 +83,7 @@ public class RobotContainer {
     //create the auto commands
     // note that building path following during auto is significant elapsed time
     // possibly use a map (lob) array to store commands
+    createAutoCommands();
 
   }
 
@@ -137,6 +138,10 @@ public class RobotContainer {
 
     new JoystickButton(m_driveStick, ButtonMappings.kVISION_ON).whileHeld(
       new VisionLightOn(m_vision));
+  }
+
+  public void createAutoCommands() {
+    
   }
 
   public void getAutonomousName() {

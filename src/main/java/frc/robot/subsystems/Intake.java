@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   public Intake() {
-     m_ArmStatus = "initial";
+    m_ArmStatus = "initial";
     m_SpinnerStatus = "initial";
 
     m_beltMotor = new WPI_VictorSPX(IntakeConstants.kBELT_MOTOR_PORT);
@@ -109,7 +109,7 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("Arm Status", m_ArmStatus);
-    SmartDashboard.putString("Spinner Status", m_SpinnerStatus);
+   // SmartDashboard.putString("Arm Status", m_ArmStatus);
+   // SmartDashboard.putString("Spinner Status", m_SpinnerStatus);
   }
 }

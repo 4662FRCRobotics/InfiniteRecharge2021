@@ -67,16 +67,14 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_bIsLoadingStationAligned = m_vLoadingStationAligned.getBoolean(false);
     m_bIsHighGoalAligned = m_vHighGoalAligned.getBoolean(false);
 
     m_vVisionOn.setBoolean(m_bIsVisionOn);
 
-    /*
     SmartDashboard.putNumber("Servo Angle", m_camera0Servo.getAngle());
-    SmartDashboard.putBoolean("Is Loading Station Aligned", m_bIsLoadingStationAligned);
     SmartDashboard.putBoolean("Is High Goal Aligned", m_bIsHighGoalAligned);
-    */
+    SmartDashboard.putNumber("High Goal Distance", getHighDistance());
+    SmartDashboard.putNumber("High Goal Angle", getHighOffset());
   }
 
   public void setAngle(int angle){
@@ -111,10 +109,6 @@ public class Vision extends SubsystemBase {
   public void setLightRelayOff(){
     m_cameraLightRelay.set(Value.kOff);
     SmartDashboard.putBoolean("VisionLight", false);
-  }
-
-  public boolean isLoadingStationAligned(){
-    return m_bIsLoadingStationAligned;
   }
 
   public boolean isHighGoalAligned(){
