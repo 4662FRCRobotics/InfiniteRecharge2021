@@ -39,24 +39,24 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
-  }
-
-  private void setMotor(double speed){
-    m_shooterMotor0.set(speed * ShooterConstants.kSHOOTER_DIRECTION);
-    m_shooterMotor1.set(speed * -ShooterConstants.kSHOOTER_DIRECTION);
+  }  
+  
+  private void setMotor(double voltLower, double voltUpper){
+    m_shooterMotor0.setVoltage(voltLower * ShooterConstants.kSHOOTER_DIRECTION);
+    m_shooterMotor1.setVoltage(voltUpper * -ShooterConstants.kSHOOTER_DIRECTION);
   }
 
   public void setMotorOn(double throttle){
     double adjustedThrottle = 2 / (throttle + 3);
-    setMotor(ShooterConstants.kSHOOTER_SPEED * adjustedThrottle);
+    setMotor(ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle, ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle * adjustedThrottle);
     m_bIsMotorOn = true;
-    SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
+    //SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
   }
 
   public void setMotorOff(){
-    setMotor(ShooterConstants.kSHOOTER_ZERO_SPEED);
+    m_shooterMotor0.stopMotor();
+    m_shooterMotor1.stopMotor();
     m_bIsMotorOn = false;
-    SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
+    //SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
   }
 }

@@ -56,16 +56,21 @@ public class Hopper extends SubsystemBase{
     m_hopperMotor.set(speed);
   }
 
-  public void setHopperMotorOn() {
-    m_hopperMotor.set(HopperConstants.kHOPPER_SPEED);
+  public void setHopperMotorIntake() {
+    m_hopperMotor.set(HopperConstants.kHOPPER_INTAKE_SPEED);
     m_bIsHopperMotorOn = true;
-    SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
+    //SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
+  }
+
+  public void setHopperMotorLaunch() {
+    m_hopperMotor.set(HopperConstants.kHOPPER_LAUNCH_SPEED);
+    m_bIsHopperMotorOn = true;
   }
 
   public void setHopperMotorOff() {
     m_hopperMotor.stopMotor();
     m_bIsHopperMotorOn = false;
-    SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
+    //SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
   }
 
   public void extendBeltFrame() {
@@ -81,11 +86,11 @@ public class Hopper extends SubsystemBase{
   }
 
   public boolean isBallAtShooter() {
-    return m_bIsAtShooter;
+    return !m_bIsAtShooter;
   }
 
   public boolean shouldIntakeTurnOn(){
-    return !(m_bIsAtShooter && m_bIsAtIntake);
+    return m_bIsAtShooter || m_bIsAtIntake;
   }
 
   //public boolean shouldHopperFeed(){

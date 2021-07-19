@@ -26,73 +26,18 @@ public final class Constants {
         public static final int kSHOOTER = 1;
 
         public static final int kLOADER = 2;
-        public static final int kCLIMB_UP = 5;
-        public static final int kCLIMB_DOWN = 3;
+        public static final int kCLOSELOADER = 3;
+        public static final int kLOADERSPIT = 5;
+        public static final int kCLIMB_UP = 6;
+        public static final int kCLIMB_DOWN = 4;
         public static final int kVISION_ON = 8;
         public static final int kVISION_DOWN = 7;
         
         public static final int kCLIMB_SWITCH = 9;
 
-        //public static final int kHARVESTER_REVERSE = 10;
+        public static final int kHARVESTER_REVERSE = 10;
     }
 
-    public static final class ContestantConstants {
-        public static final String kBLUE_STRING = "B";
-        public static final String kRED_STRING = "R";
-        public static final String kGREEN_STRING = "G";
-        public static final String kYELLOW_STRING = "Y";
-
-        public static final int kCHANGES_PER_ROT = 24;
-        public static final int kMOTOR_ID = 6;
-        public static final double kPOSITION_MOTOR_SPEED = 0.25;
-        public static final double kROTATION_MOTOR_SPEED = 0.5;
-        public static final double kOVERRIDE_SPEED = 1.0;
-        public static final double kZERO_SPEED = 0;
-
-        public static final double kCOLOR_CONFIDENCE_THRESHOLD = 0.95;  // .85
-
-        //public static final int CONTESTANT_MOTOR = 
-
-        public enum Color {
-            RED(0.531006, 0.337158, 0.128906, kRED_STRING),
-            BLUE(0.119873, 0.414551, 0.465820, kBLUE_STRING),
-            YELLOW(0.321289, 0.555908, 0.123291, kYELLOW_STRING),
-            GREEN(0.165527, 0.573975, 0.260010, kGREEN_STRING);
-
-            private double m_dRed;
-            private double m_dGreen;
-            private double m_dBlue;
-
-            private String m_name;
-
-            Color(double red, double green, double blue, String name) {
-                this.m_dRed = red;
-                this.m_dBlue = blue;
-                this.m_dGreen = green;
-                this.m_name = name;
-            }
-            public double getRed(){
-                return m_dRed;
-            }
-
-            public double getGreen(){
-                return m_dGreen;
-            }
-
-            public double getBlue(){
-                return m_dBlue;
-            }
-
-            public final String getName(){
-                return m_name;
-            }
-        }
-        
-        public enum Direction {
-            CW, CCW
-        }
-    }
-    
     public static final class DriveConstants {
         public static final int kLeftMotor1Port = 2;
         public static final int kLeftMotor2Port = 3;
@@ -135,14 +80,16 @@ public final class Constants {
         public static final int kHOPPER_MOTOR_PORT = 8; // Arbitrary number for now
         public static final int kSHOOTER_SENSOR_PORT = 0;
         public static final int kINTAKE_SENSOR_PORT = 1;
-        public static final int kHOPPER_ENCODER_PORT = 3;
-        public static final double kDISTANCE_PER_ROTATION = 6.0;
-        public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
+        //public static final int kHOPPER_ENCODER_PORT = 3;
+        //public static final double kDISTANCE_PER_ROTATION = 6.0;
+        //public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
         //public static final int kHOPPER_AT_INTAKE_PORT = 2;
-        public static final double kHOPPER_SPEED = -0.5;
+        public static final double kHOPPER_SPEED = 0.55;
+        public static final double kHOPPER_INTAKE_SPEED = 0.6;
+        public static final double kHOPPER_LAUNCH_SPEED = 0.3;
         public static final double kHOPPER_ZERO_SPEED = 0;
         public static final double kDISTANCE_THRESHOLD = 10.0;
-        public static final int kBELT_FRAME_OUT = 0;
+        public static final int kBELT_FRAME_OUT = 4;
         public static final int kBELT_FRAME_IN = 1;
     }
 
@@ -150,8 +97,7 @@ public final class Constants {
         public static final int kSHOOTER_MOTOR0_PORT = 9;
         public static final int kSHOOTER_MOTOR1_PORT = 10;
 
-        public static final double kSHOOTER_SPEED = -.6;
-        public static final double kSHOOTER_ZERO_SPEED = 0;
+        public static final double kSHOOTER_MAX_VOLTS = 11;
 
         public static final int kSHOOTER_DIRECTION = 1;
     }
@@ -174,8 +120,28 @@ public final class Constants {
     }
     public static final class IntakeConstants{
         public static final int kBELT_MOTOR_PORT = 11;
-        public static final double kBELT_MOTOR_SPEED = -0.5;
+        public static final double kBELT_MOTOR_SPEED = -0.3;
         public static final int kINTAKE_DOWN = 2;
         public static final int kINTAKE_UP = 3;
     } 
+
+    public static final class ConsoleCommandConstants{
+        public static final int kPOV_INTERVAL = 45;
+    
+        public static final int kPOSITION_LEFT_I = 0;
+        public static final int kPOSITION_MIDDLE_I = 1;
+        public static final int kPOSITION_RIGHT_I = 2;
+        public static final int kPOSITION_HOME_I = 3;
+
+        public static final int kPATTERN_CROSSLINE_I = 0;
+        public static final int kPATTERN_SHOOT_I = 1;
+        public static final int kPATTERH_GATHER_I = 2;
+        
+        public static final String kDEFAULT_PATTERN_NAME = "Default.Default";
+
+        public static final String kPOS_PATTERN_NAME[][] = {{"Left.Crossline", "Left.ShootCross", "Left.ShootGatther"},
+                                                            {"Mid.Crossline", "Mid.ShootCross", "Mid.ShootGather"},
+                                                            {"Right.Crossline", "Right.ShootCross", "Right.ShootGather"},
+                                                            {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
+    }
 }

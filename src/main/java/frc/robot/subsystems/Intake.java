@@ -7,13 +7,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Common;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
@@ -21,20 +22,19 @@ public class Intake extends SubsystemBase {
   private String m_ArmStatus;
   private String m_SpinnerStatus;
 
-  private WPI_TalonSRX m_beltMotor;
   private DoubleSolenoid m_IntakeDeploy;
-  // private WPI_TalonSRX m_harvesterMotor;
+  private WPI_VictorSPX m_beltMotor;
   /**
    * Creates a new Intake.
    */
   public Intake() {
-     m_ArmStatus = "initial";
+    m_ArmStatus = "initial";
     m_SpinnerStatus = "initial";
 
-    m_beltMotor = new WPI_TalonSRX(IntakeConstants.kBELT_MOTOR_PORT);
-    m_beltMotor.configFactoryDefault();
+    m_beltMotor = new WPI_VictorSPX(IntakeConstants.kBELT_MOTOR_PORT);
+    //m_beltMotor.configFactoryDefault();
 
-    m_IntakeDeploy = new DoubleSolenoid(IntakeConstants.kINTAKE_DOWN, IntakeConstants.kINTAKE_UP);
+    m_IntakeDeploy = new DoubleSolenoid(Common.kPCM_PORT,IntakeConstants.kINTAKE_DOWN, IntakeConstants.kINTAKE_UP);
   }
 
   public void ArmUp() {
@@ -95,17 +95,21 @@ public class Intake extends SubsystemBase {
 
   public void beltOn(){
     m_beltMotor.set(IntakeConstants.kBELT_MOTOR_SPEED);
-    SmartDashboard.putBoolean("Feeder Belt", true);
+    //SmartDashboard.putBoolean("Feeder Belt", true);
+  }
+
+  public void beltRev() {
+    m_beltMotor.set(-IntakeConstants.kBELT_MOTOR_SPEED);
   }
 
   public void beltOff(){
     m_beltMotor.stopMotor();
-    SmartDashboard.putBoolean("Feeder Belt", false);
+    //SmartDashboard.putBoolean("Feeder Belt", false);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("Arm Status", m_ArmStatus);
-    SmartDashboard.putString("Spinner Status", m_SpinnerStatus);
+   // SmartDashboard.putString("Arm Status", m_ArmStatus);
+   // SmartDashboard.putString("Spinner Status", m_SpinnerStatus);
   }
 }

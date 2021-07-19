@@ -8,36 +8,46 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Vision;
 
-public class LoadAutoXML extends CommandBase {
-  private final Autonomous m_autonomous;
-  private final IntSupplier m_pov1;
-  private final IntSupplier m_pov2;
+public class FwdCameraTilt extends CommandBase {
   /**
-   * Creates a new LoadAutoXML.
+   * Creates a new FwdCameraTilt.
+   * 
    */
-  public LoadAutoXML(Autonomous autonomous, IntSupplier pov1, IntSupplier pov2) {
-    m_autonomous = autonomous;
-    m_pov1 = pov1;
-    m_pov2 = pov2;
+  private Vision m_vision;
+  private DoubleSupplier m_cameraAngle;
 
+  public FwdCameraTilt(Vision subsystem, DoubleSupplier cameraAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_autonomous);
+    m_vision = subsystem;
+    m_cameraAngle = cameraAngle;
+    addRequirements(m_vision);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_autonomous.getXML(m_pov1, m_pov2);
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    double cameraCntl = Math.abs(m_cameraAngle.getAsDouble() - 1);
+    int iCameraCntl = (int) (cameraCntl * 90.0);
+    m_vision.setAngle(iCameraCntl);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
