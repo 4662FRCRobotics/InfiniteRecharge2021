@@ -108,7 +108,7 @@ public class Drive extends SubsystemBase {
       m_headingSign = 1;
     }
 
-    m_gyroAndCollison = new AHRS(SerialPort.Port.kMXP);
+    m_gyroAndCollison = new AHRS(SPI.Port.kMXP);
     m_driveOdometry = new DifferentialDriveOdometry(getRotation2dK());
 
     SendableRegistry.addLW(m_robotDrive, "Drive Base");
