@@ -99,7 +99,7 @@ public final class Constants {
 
         public static final double kSHOOTER_MAX_VOLTS = 11;
 
-        public static final int kSHOOTER_DIRECTION = 1;
+        public static final int kSHOOTER_DIRECTION = -1;
     }
 
     public static final class VisionConstants {
