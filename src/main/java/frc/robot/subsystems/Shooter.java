@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,6 +33,8 @@ public class Shooter extends SubsystemBase {
 
     m_shooterMotor0.configFactoryDefault();
     m_shooterMotor1.configFactoryDefault();
+    m_shooterMotor0.setNeutralMode(NeutralMode.Coast);
+    m_shooterMotor1.setNeutralMode(NeutralMode.Coast);
 
     m_bIsMotorOn = false;
   }
@@ -49,7 +52,7 @@ public class Shooter extends SubsystemBase {
   public void setMotorOn(double throttle){
     double adjustedThrottle = 2 / (throttle + 3);
     double voltLower = ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle;
-    double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * (adjustedThrottle * .95) * (adjustedThrottle * .95);
+    double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * Math.pow(adjustedThrottle * ShooterConstants.kSHOOTER_LOW_OFFSET,2);
     setMotor(voltLower, voltUpper);
     m_bIsMotorOn = true;
     //SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
