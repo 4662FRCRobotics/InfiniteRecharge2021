@@ -89,20 +89,17 @@ public final class Constants {
     }
 
     public static final class HopperConstants {
-        public static final int kHOPPER_MOTOR_PORT = 8; // Arbitrary number for now
+        public static final int kHOPPER_MOTOR_PORT = 8;
         public static final int kSHOOTER_SENSOR_PORT = 0;
         public static final int kINTAKE_SENSOR_PORT = 1;
-        //public static final int kHOPPER_ENCODER_PORT = 3;
-        //public static final double kDISTANCE_PER_ROTATION = 6.0;
-        //public static final double kHOPPER_ENCODER_TOLERANCE = 0.05;
-        //public static final int kHOPPER_AT_INTAKE_PORT = 2;
+        public static final int kBELT_FRAME_OUT = 4;
+        public static final int kBELT_FRAME_IN = 1;
+
         public static final double kHOPPER_SPEED = 0.55;
         public static final double kHOPPER_INTAKE_SPEED = 0.6;
         public static final double kHOPPER_LAUNCH_SPEED = 0.3;
         public static final double kHOPPER_ZERO_SPEED = 0;
         public static final double kDISTANCE_THRESHOLD = 10.0;
-        public static final int kBELT_FRAME_OUT = 4;
-        public static final int kBELT_FRAME_IN = 1;
     }
 
     public static final class ShooterConstants {

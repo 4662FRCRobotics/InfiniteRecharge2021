@@ -72,10 +72,10 @@ public class Drive extends SubsystemBase {
     m_leftController1.restoreFactoryDefaults();
     m_leftController2.restoreFactoryDefaults();
 
-    m_leftController1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_leftController2.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_rightController1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_rightController2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    m_leftController1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_leftController2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_rightController1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_rightController2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     m_leftController1.setOpenLoopRampRate(DriveConstants.kRAMP_RATE);
     m_leftController2.setOpenLoopRampRate(DriveConstants.kRAMP_RATE);
