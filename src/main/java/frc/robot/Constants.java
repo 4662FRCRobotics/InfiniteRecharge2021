@@ -48,7 +48,7 @@ public final class Constants {
         public static final int kLeftMotor2Port = 3;
         public static final int kRightMotor1Port = 4;
         public static final int kRightMotor2Port = 5;
-        public static final boolean kIS_DRIVE_INVERTED = true;
+        public static final boolean kIS_DRIVE_INVERTED = false;
 
         public static final double kRAMP_RATE = 1.0;
         public static final int kCURRENT_LIMT = 40;

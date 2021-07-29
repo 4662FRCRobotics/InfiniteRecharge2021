@@ -98,15 +98,15 @@ public class Drive extends SubsystemBase {
     m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
   //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
   //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
-    if (DriveConstants.kIS_DRIVE_INVERTED) {
+    //if (DriveConstants.kIS_DRIVE_INVERTED) {
       m_leftEncoderSign = 1;
       m_rightEncoderSign = -1;
       m_headingSign = -1;
-    } else {
-      m_leftEncoderSign = -1;
-      m_rightEncoderSign = 1;
-      m_headingSign = 1;
-    }
+    //} else {
+    //  m_leftEncoderSign = -1;
+    //  m_rightEncoderSign = 1;
+    //  m_headingSign = 1;
+    //}
 
     m_gyroAndCollison = new AHRS(SPI.Port.kMXP);
     m_driveOdometry = new DifferentialDriveOdometry(getRotation2dK());
