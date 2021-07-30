@@ -19,7 +19,11 @@ import com.revrobotics.EncoderType;
 
 //import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
@@ -40,6 +44,9 @@ public class Drive extends SubsystemBase {
   private CANEncoder m_rightEncoder1;
 
   private DifferentialDrive m_robotDrive;
+  private double m_leftEncoderSign;
+  private double m_rightEncoderSign;
+  private double m_headingSign;
 
   private AHRS m_gyroAndCollison;
   /*private PIDController m_turnAngle;
@@ -48,6 +55,7 @@ public class Drive extends SubsystemBase {
   private double m_dTurnAngleD;
   private double m_dTurnAngleTolerance;*/
   private double m_dAngle;
+  private final DifferentialDriveOdometry m_driveOdometry;
 
   //private PIDController m_keepHeading;
   
@@ -63,21 +71,11 @@ public class Drive extends SubsystemBase {
     m_rightController2.restoreFactoryDefaults();
     m_leftController1.restoreFactoryDefaults();
     m_leftController2.restoreFactoryDefaults();
-    
-    m_leftControlGroup = new SpeedControllerGroup(m_leftController1, m_leftController2);
-    m_rightControlGroup = new SpeedControllerGroup(m_rightController1, m_rightController2);
 
-    m_robotDrive = new DifferentialDrive(m_leftControlGroup, m_rightControlGroup);
-
-    m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
-    m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
-  //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
-  //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
-
-    m_leftController1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_leftController2.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_rightController1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    m_rightController2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    m_leftController1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_leftController2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_rightController1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    m_rightController2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     m_leftController1.setOpenLoopRampRate(DriveConstants.kRAMP_RATE);
     m_leftController2.setOpenLoopRampRate(DriveConstants.kRAMP_RATE);
@@ -88,8 +86,33 @@ public class Drive extends SubsystemBase {
     m_leftController2.setSmartCurrentLimit(DriveConstants.kCURRENT_LIMT);
     m_rightController1.setSmartCurrentLimit(DriveConstants.kCURRENT_LIMT);
     m_rightController2.setSmartCurrentLimit(DriveConstants.kCURRENT_LIMT);
+    
+    m_leftControlGroup = new SpeedControllerGroup(m_leftController1, m_leftController2);
+    m_rightControlGroup = new SpeedControllerGroup(m_rightController1, m_rightController2);
+    m_leftControlGroup.setInverted(DriveConstants.kIS_DRIVE_INVERTED);
+    m_rightControlGroup.setInverted(DriveConstants.kIS_DRIVE_INVERTED);
+
+    m_robotDrive = new DifferentialDrive(m_leftControlGroup, m_rightControlGroup);
+
+    m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
+    m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
+  //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
+  //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
+    //if (DriveConstants.kIS_DRIVE_INVERTED) {
+      m_leftEncoderSign = 1;
+      m_rightEncoderSign = -1;
+      m_headingSign = -1;
+    //} else {
+    //  m_leftEncoderSign = -1;
+    //  m_rightEncoderSign = 1;
+    //  m_headingSign = 1;
+    //}
 
     m_gyroAndCollison = new AHRS(SPI.Port.kMXP);
+    m_driveOdometry = new DifferentialDriveOdometry(getRotation2dK());
+
+    SendableRegistry.addLW(m_robotDrive, "Drive Base");
+    SendableRegistry.addLW(m_gyroAndCollison, "NavX");
 
     //m_turnAngle = new PIDController(DriveConstants.kTURN_ANGLE_P, DriveConstants.kTURN_ANGLE_I, DriveConstants.kTURN_ANGLE_D);
     m_dAngle = 0;
@@ -103,11 +126,13 @@ public class Drive extends SubsystemBase {
   public void periodic() {
     //arcadeDrive(Robot.m_robotContainer.getVelocity(), Robot.m_robotContainer.getHeading());
 
-      //double distancePerEncoderTic = DriveConstants.kGEARBOX_REDUCTION * (DriveConstants.kTIRE_SIZE * Math.PI);
-      double distancePerEncoderTic = (DriveConstants.kTIRE_SIZE * Math.PI) / DriveConstants.kTIRE_SIZE / DriveConstants.kPULSE_PER_ROTATION;
-      SmartDashboard.putNumber("leftencoder", m_leftEncoder1.getPosition() /*distancePerEncoderTic*/); // "/"
-      SmartDashboard.putNumber("rightencoder", m_rightEncoder1.getPosition() /* distancePerEncoderTic*/); //"/"
-      SmartDashboard.putNumber("Gyro", m_gyroAndCollison.getAngle());
+    m_driveOdometry.update(getRotation2dK(), getLeftDistance(), getRightDistance());
+    SmartDashboard.putNumber("GyroK", getAngleK());
+    SmartDashboard.putNumber("LeftEncdr:", getLeftDistance());
+    SmartDashboard.putNumber("RightEncdr:", getRightDistance());
+    SmartDashboard.putNumber("Odo Y" , m_driveOdometry.getPoseMeters().getTranslation().getY());
+    SmartDashboard.putNumber("Odo X", m_driveOdometry.getPoseMeters().getTranslation().getX());
+    SmartDashboard.putNumber("Odo Deg", m_driveOdometry.getPoseMeters().getRotation().getDegrees());
   
   }
 
@@ -120,14 +145,48 @@ public class Drive extends SubsystemBase {
     return -(m_leftEncoder1.getPosition() - m_rightEncoder1.getPosition()) / 2;
   }
 
+  private double getLeftDistance() {
+    return m_leftEncoderSign * m_leftEncoder1.getPosition() * DriveConstants.kENCODER_DISTANCE_PER_PULSE_M;
+  }
+
+  private double getRightDistance() {
+    return m_rightEncoderSign * m_rightEncoder1.getPosition() * DriveConstants.kENCODER_DISTANCE_PER_PULSE_M;
+  }
+
   public double getHeading() {
     return Math.IEEEremainder(m_gyroAndCollison.getAngle(), 360);
   }
 
-  public void reset() {
-    m_gyroAndCollison.reset();
+  public void resetEncoders() {
+    //m_gyroAndCollison.reset();
     m_leftEncoder1.setPosition(0);
     m_rightEncoder1.setPosition(0);
   }
+
+  private double getAngleK() {
+    return m_gyroAndCollison.getAngle();
+  }
+
+  private Rotation2d getRotation2dK() {
+    // note the negation of the angle is required because the wpilib convention
+    // uses left positive rotation while gyros read right positive
+    return Rotation2d.fromDegrees(-getAngleK());
+  }
+
+  public void resetDrive() {
+    resetAngle();
+    resetEncoders();
+  }
+
+  private void resetAngle() {
+    m_gyroAndCollison.zeroYaw();
+    // need to add reset of odometry and encoders
+  }
+
+  public void reset() {
+    resetAngle();
+    resetDrive();
+  }
+
 
 }
