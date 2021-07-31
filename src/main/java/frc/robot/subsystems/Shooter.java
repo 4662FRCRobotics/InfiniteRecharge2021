@@ -50,7 +50,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setMotorOn(double throttle){
-    double adjustedThrottle = 2 / (throttle + 3);
+    double adjustedThrottle = 1 - ((throttle + 1) * 0.25);
     double voltLower = ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle;
     double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * Math.pow(adjustedThrottle * ShooterConstants.kSHOOTER_LOW_OFFSET,2);
     setMotor(voltLower, voltUpper);

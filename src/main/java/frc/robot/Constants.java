@@ -106,7 +106,7 @@ public final class Constants {
         public static final int kSHOOTER_MOTOR0_PORT = 9;
         public static final int kSHOOTER_MOTOR1_PORT = 10;
 
-        public static final double kSHOOTER_MAX_VOLTS = 11;
+        public static final double kSHOOTER_MAX_VOLTS = 10;
         public static final double kSHOOTER_LOW_OFFSET = 0.95;
 
         public static final int kSHOOTER_DIRECTION = -1;
