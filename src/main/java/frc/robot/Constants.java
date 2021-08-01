@@ -107,7 +107,15 @@ public final class Constants {
         public static final int kSHOOTER_MOTOR1_PORT = 10;
 
         public static final double kSHOOTER_MAX_VOLTS = 10;
-        public static final double kSHOOTER_LOW_OFFSET = 0.95;
+        // check the Launcher Wheel Variables spreadsheet to see what these numbers do
+        // low offset is for formula 1
+        public static final double kSHOOTER_LOW_OFFSET = 0.90;
+        // constants for formula 2 
+        public static final double kUPPER_WHEEL_K2 = 14;
+        public static final double kUPPER_WHEEL_K1 = 6;
+        // contstans for formula 3
+        public static final double kUPPER_WHEEL_K3 = 3;
+        public static final double kUPPER_WHEEL_K4 = 1;
 
         public static final int kSHOOTER_DIRECTION = -1;
     }

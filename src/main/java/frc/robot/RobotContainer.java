@@ -100,7 +100,7 @@ public class RobotContainer {
     new JoystickButton(m_driveStick, ButtonMappings.kSHOOTER)
     .whileHeld(
         new ParallelCommandGroup(
-          new ShootPowerCells(m_shooter, m_driveStick),
+          new ShootPowerCells(m_shooter, m_console),
           new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper)),
           new VisionLightOn(m_vision)
         )
@@ -116,11 +116,7 @@ public class RobotContainer {
     
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_DOWN).whileHeld(
       new ClimbDown(m_climb));
-    
-    //new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_SWITCH)
-    //.whenPressed(() -> m_vision.setServoUp())
-    //.whenReleased(() -> m_vision.setServoDown());
-  
+     
     new  JoystickButton(m_driveStick, ButtonMappings.kLOADER)
     .whileHeld(
       new HarvestPowerCells(m_hopper, m_intake)

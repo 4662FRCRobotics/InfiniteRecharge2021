@@ -52,7 +52,9 @@ public class Shooter extends SubsystemBase {
   public void setMotorOn(double throttle){
     double adjustedThrottle = 1 - ((throttle + 1) * 0.25);
     double voltLower = ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle;
-    double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * Math.pow(adjustedThrottle * ShooterConstants.kSHOOTER_LOW_OFFSET,2);
+    //double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * Math.pow(adjustedThrottle * ShooterConstants.kSHOOTER_LOW_OFFSET,2);
+    double voltUpper = ShooterConstants.kUPPER_WHEEL_K2 - (ShooterConstants.kUPPER_WHEEL_K1 / adjustedThrottle);
+    //double voltUpper = voltLower + (ShooterConstants.kUPPER_WHEEL_K4 - (ShooterConstants.kUPPER_WHEEL_K3 / adjustedThrottle));
     setMotor(voltLower, voltUpper);
     m_bIsMotorOn = true;
     //SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
