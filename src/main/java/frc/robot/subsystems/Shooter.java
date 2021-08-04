@@ -35,6 +35,10 @@ public class Shooter extends SubsystemBase {
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor0.setNeutralMode(NeutralMode.Coast);
     m_shooterMotor1.setNeutralMode(NeutralMode.Coast);
+    m_shooterMotor0.configContinuousCurrentLimit(ShooterConstants.kSHOOTER_LIMIT_AMPS);
+    m_shooterMotor1.configContinuousCurrentLimit(ShooterConstants.kSHOOTER_LIMIT_AMPS);
+    m_shooterMotor0.configOpenloopRamp(ShooterConstants.kSHOOTER_RAMP_SEC);
+    m_shooterMotor1.configOpenloopRamp(ShooterConstants.kSHOOTER_RAMP_SEC);
 
     m_bIsMotorOn = false;
   }
