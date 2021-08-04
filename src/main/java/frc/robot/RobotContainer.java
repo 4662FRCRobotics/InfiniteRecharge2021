@@ -106,6 +106,8 @@ public class RobotContainer {
         )
       );
 
+    // conditional command requires a true on the second attribute for the command to run
+    // this is a "deadman" two button to raise the climber - reduce risk of accidental lift before intended
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_UP)
     .whileHeld(
       new ConditionalCommand(
