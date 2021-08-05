@@ -39,8 +39,9 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = 1 - ((m_speed.getAsDouble() + 1) * 0.25);
-    m_drive.arcadeDrive(m_forward.getAsDouble() * 2 / speed, m_rotation.getAsDouble() * 2 / (m_turnRate.getAsDouble() + 3));
+    double speed = m_forward.getAsDouble() * (1 - ((m_speed.getAsDouble() + 1) * 0.25));
+    double rotation = m_rotation.getAsDouble() * (1- ((m_turnRate.getAsDouble() + 1) * 0.25));
+    m_drive.arcadeDrive(speed, rotation);
   }
 
 }
