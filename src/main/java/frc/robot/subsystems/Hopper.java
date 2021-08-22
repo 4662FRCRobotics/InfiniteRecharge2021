@@ -46,8 +46,8 @@ public class Hopper extends SubsystemBase{
     m_bIsAtIntake = m_intakeSensor.get();
     m_bIsAtShooter = m_shooterSensor.get();
     
-    SmartDashboard.putBoolean("Shooter Sensor reading", m_bIsAtShooter);
-    SmartDashboard.putBoolean("Intake Sensor reading", m_bIsAtIntake);
+    //SmartDashboard.putBoolean("Shooter Sensor reading", m_bIsAtShooter);
+    //SmartDashboard.putBoolean("Intake Sensor reading", m_bIsAtIntake);
     
     
   }

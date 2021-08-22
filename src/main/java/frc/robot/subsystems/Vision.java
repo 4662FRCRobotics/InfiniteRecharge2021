@@ -71,7 +71,7 @@ public class Vision extends SubsystemBase {
 
     m_vVisionOn.setBoolean(m_bIsVisionOn);
 
-    SmartDashboard.putNumber("Servo Angle", m_camera0Servo.getAngle());
+    //SmartDashboard.putNumber("Servo Angle", m_camera0Servo.getAngle());
     SmartDashboard.putBoolean("Is High Goal Aligned", m_bIsHighGoalAligned);
     SmartDashboard.putNumber("High Goal Distance", getHighDistance());
     SmartDashboard.putNumber("High Goal Angle", getHighOffset());
