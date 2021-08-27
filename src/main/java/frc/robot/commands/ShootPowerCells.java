@@ -19,13 +19,17 @@ public class ShootPowerCells extends CommandBase {
    */
   private Shooter m_shooter;
   private Joystick m_console;
+  private DoubleSupplier m_shootThrottle;
+  private DoubleSupplier m_upperOffset;
   private double m_throttle;
   private boolean m_bIsAutonomous;
   
-  public ShootPowerCells(Shooter shooter, Joystick console) {
+  public ShootPowerCells(Shooter shooter, DoubleSupplier shootThrottle, DoubleSupplier upperOffset) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
-    m_console = console;
+    //m_console = console;
+    m_shootThrottle = shootThrottle;
+    m_upperOffset = upperOffset;
     m_bIsAutonomous = false;
     addRequirements(m_shooter);
   }
@@ -53,7 +57,7 @@ public class ShootPowerCells extends CommandBase {
     }
     */
     //if (m_vision.isHighGoalAligned()){
-      m_shooter.setMotorOn(m_console.getZ());
+      m_shooter.setMotorOn(m_shootThrottle, m_upperOffset);
     //} else {
       //m_shooter.setMotorOff();
     //}

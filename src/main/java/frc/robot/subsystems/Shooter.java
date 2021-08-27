@@ -27,6 +27,9 @@ public class Shooter extends SubsystemBase {
   
   private boolean m_bIsMotorOn;
 
+  private double m_voltUpper;
+  private double m_voltLower;
+
   public Shooter() {
     m_shooterMotor0 = new WPI_TalonSRX(ShooterConstants.kSHOOTER_MOTOR0_PORT);
     m_shooterMotor1 = new WPI_TalonSRX(ShooterConstants.kSHOOTER_MOTOR1_PORT);
@@ -46,22 +49,24 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("LowVolts", m_voltLower);
+    SmartDashboard.putNumber("UpVolts", m_voltUpper);
   }  
   
   private void setMotor(double voltLower, double voltUpper){
-    //SmartDashboard.putNumber("LowVolts", voltLower);
-    //SmartDashboard.putNumber("UpVolts", voltUpper);
+
     m_shooterMotor0.setVoltage(voltLower * ShooterConstants.kSHOOTER_DIRECTION);
     m_shooterMotor1.setVoltage(voltUpper * -ShooterConstants.kSHOOTER_DIRECTION);
   }
 
-  public void setMotorOn(double throttle){
-    double adjustedThrottle = 1 - ((-throttle + 1) * 0.25);
-    double voltLower = ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle;
+  public void setMotorOn(DoubleSupplier throttle, DoubleSupplier upperOffset){
+
+    double adjustedThrottle = 1 - ((-throttle.getAsDouble() + 1) * 0.25);
+    m_voltLower = ShooterConstants.kSHOOTER_MAX_VOLTS * adjustedThrottle;
     //double voltUpper = ShooterConstants.kSHOOTER_MAX_VOLTS * Math.pow(adjustedThrottle * ShooterConstants.kSHOOTER_LOW_OFFSET,2);
-    double voltUpper = ShooterConstants.kUPPER_WHEEL_K2 - (ShooterConstants.kUPPER_WHEEL_K1 / adjustedThrottle);
+    m_voltUpper = ShooterConstants.kUPPER_WHEEL_K2 - (ShooterConstants.kUPPER_WHEEL_K1 / adjustedThrottle);
     //double voltUpper = voltLower + (ShooterConstants.kUPPER_WHEEL_K4 - (ShooterConstants.kUPPER_WHEEL_K3 / adjustedThrottle));
-    setMotor(voltLower, voltUpper);
+    setMotor(m_voltLower, m_voltUpper);
     m_bIsMotorOn = true;
     //SmartDashboard.putBoolean("Shooter Motor", m_bIsMotorOn);
   }
