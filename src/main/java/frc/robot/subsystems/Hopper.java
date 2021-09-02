@@ -46,8 +46,8 @@ public class Hopper extends SubsystemBase{
     m_bIsAtIntake = m_intakeSensor.get();
     m_bIsAtShooter = m_shooterSensor.get();
     
-    //SmartDashboard.putBoolean("Shooter Sensor reading", m_bIsAtShooter);
-    //SmartDashboard.putBoolean("Intake Sensor reading", m_bIsAtIntake);
+    SmartDashboard.putBoolean("Hopper Top Open", m_bIsAtShooter);
+    SmartDashboard.putBoolean("Hopper Intake Open", m_bIsAtIntake);
     
     
   }
@@ -81,16 +81,16 @@ public class Hopper extends SubsystemBase{
     m_beltFramePiston.set(Value.kReverse);
   }
   
-  public boolean isHopperAligned(){
-    return true;
-  }
+  //public boolean isHopperAligned(){
+  //  return true;
+  //}
 
   public boolean isBallAtShooter() {
     return !m_bIsAtShooter;
   }
 
   public boolean shouldIntakeTurnOn(){
-    return m_bIsAtShooter || m_bIsAtIntake;
+    return (m_bIsAtShooter || m_bIsAtIntake);
   }
 
   //public boolean shouldHopperFeed(){
