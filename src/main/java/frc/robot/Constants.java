@@ -27,9 +27,9 @@ public final class Constants {
     }
 
     public static final class ButtonMappings {
-        
-        public static final int kSHOOTER = 1;
 
+        // joystick buttons
+        public static final int kSHOOTER = 1;
         public static final int kLOADER = 2;
         public static final int kCLOSELOADER = 3;
         public static final int kLOADERSPIT = 5;
@@ -37,10 +37,10 @@ public final class Constants {
         public static final int kCLIMB_DOWN = 4;
         public static final int kVISION_ON = 8;
         public static final int kVISION_DOWN = 7;
-        
-        public static final int kCLIMB_SWITCH = 9;
-
         public static final int kHARVESTER_REVERSE = 10;
+
+        // console buttons
+        public static final int kCLIMB_SWITCH = 1;
     }
 
     public static final class DriveConstants {
@@ -109,7 +109,9 @@ public final class Constants {
         public static final int kSHOOTER_LIMIT_AMPS = 40;
         public static final double kSHOOTER_RAMP_SEC = 0.5;
 
-        public static final double kSHOOTER_MAX_VOLTS = 10;
+        public static final double kSHOOTER_MAX_VOLTS = 9;
+        public static final double kSHOOTER_MIN_VOLTS = 5;
+        public static final double kSHOOTER_RANGE = kSHOOTER_MAX_VOLTS - kSHOOTER_MIN_VOLTS;
         // check the Launcher Wheel Variables spreadsheet to see what these numbers do
         // low offset is for formula 1
         public static final double kSHOOTER_LOW_OFFSET = 0.90;

@@ -113,7 +113,7 @@ public class RobotContainer {
       new ConditionalCommand(
         new ClimbUp(m_climb),
         new InstantCommand(),
-        () -> m_driveStick.getRawButton(ButtonMappings.kCLIMB_SWITCH))
+        () -> m_console.getRawButton(ButtonMappings.kCLIMB_SWITCH))
       );
     
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_DOWN).whileHeld(
