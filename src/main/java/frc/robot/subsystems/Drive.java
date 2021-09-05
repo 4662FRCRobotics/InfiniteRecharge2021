@@ -174,7 +174,6 @@ public class Drive extends SubsystemBase {
   }
 
   public void resetDrive() {
-    resetAngle();
     resetEncoders();
   }
 
