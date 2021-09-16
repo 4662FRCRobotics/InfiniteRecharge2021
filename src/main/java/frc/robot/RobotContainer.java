@@ -77,6 +77,13 @@ public class RobotContainer {
       )
     );
 
+    m_shooter.setDefaultCommand(
+      new ShootSetPower(m_shooter,
+      () -> m_console.getZ(),
+      () -> m_console.getThrottle()
+      )
+    );;
+
     m_hopper.retractBeltFrame();
     m_intake.ArmUp();
 
