@@ -5,6 +5,7 @@
 package frc.robot.libraries;
 
 import frc.robot.Constants.ConsoleCommandConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -15,13 +16,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 //import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.IntSupplier;
+import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
 /**
  * The {@link SendableChooser} class is a useful tool for presenting a selection of options to the
@@ -38,22 +37,23 @@ import java.util.function.IntSupplier;
 public class ConsoleCommand {
 
   /** The key for the default value. */
-  private static final String DEFAULT = "default";
+  //private static final String DEFAULT = "default";
   /** The key for the selected option. */
-  private static final String SELECTED = "selected";
+  //private static final String SELECTED = "selected";
   /** The key for the active option. */
-  private static final String ACTIVE = "active";
+  //private static final String ACTIVE = "active";
   /** The key for the option array. */
-  private static final String OPTIONS = "options";
+  //private static final String OPTIONS = "options";
   /** The key for the instance number. */
-  private static final String INSTANCE = ".instance";
+  //private static final String INSTANCE = ".instance";
+  
   /** A map linking strings to the objects the represent. */
   private final Map<String, Command> m_map = new LinkedHashMap<>();
 
   private String m_defaultChoice = "";
   
  // private final int m_instance;
-  private static final AtomicInteger s_instances = new AtomicInteger();
+  //private static final AtomicInteger s_instances = new AtomicInteger();
   
   /** Creates a new ConsoleCommand. */
   public ConsoleCommand() {
@@ -71,23 +71,32 @@ public class ConsoleCommand {
     m_map.put(name, command);
   }
 
+  public void setDefaultOption(String name, Command object) {
+    requireNonNullParam(name, "name", "setDefaultOption");
+
+    m_defaultChoice = name;
+    addOption(name, object);
+  }
+
   /*
   * given the position and pattern settings find a matching name
   * if the settings are out of bounds use the default
   * and hope someone defined a default command
   */
-  public String getPatternName(IntSupplier position, IntSupplier pattern) {
+  public String getPatternName(IntSupplier position) {
 
     int iPosition = position.getAsInt() / ConsoleCommandConstants.kPOV_INTERVAL;
-    int iPattern = pattern.getAsInt() / ConsoleCommandConstants.kPOV_INTERVAL;
-    String patternName = ConsoleCommandConstants.kDEFAULT_PATTERN_NAME;
+    //int iPattern = pattern.getAsInt() / ConsoleCommandConstants.kPOV_INTERVAL;
+    String patternName = m_defaultChoice;
 
     if (iPosition < ConsoleCommandConstants.kPOS_PATTERN_NAME.length) {
-      if (iPattern < ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition].length) {
-        patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition][iPattern];
-      }
+      //if (iPattern < ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition].length) {
+      //  patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition][iPattern];
+      //}
+      patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition];
     }
     
+    SmartDashboard.putString("Auto Name", patternName);
     return patternName;
   }
 
@@ -97,10 +106,18 @@ public class ConsoleCommand {
    *
    * @return the option selected
    */
-  public Command getSelected(IntSupplier position, IntSupplier pattern) {
+  public Command getSelected(IntSupplier position) {
 
-    String sPatternName = getPatternName(position, pattern);
-    return m_map.get(sPatternName);
+    Command autoCommand = null;
+    //String sPatternName = getPatternName(position, pattern);
+    String sPatternName = getPatternName(position);
+    autoCommand = m_map.get(sPatternName);
+    Boolean bIsCommandFound = autoCommand != null;
+    SmartDashboard.putBoolean("Auto Found", bIsCommandFound);
+    if (!bIsCommandFound) {
+      autoCommand = m_map.get(m_defaultChoice);
+    }
+    return autoCommand;
 
   }
 

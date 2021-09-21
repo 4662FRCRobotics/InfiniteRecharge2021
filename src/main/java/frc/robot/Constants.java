@@ -154,17 +154,11 @@ public final class Constants {
         public static final int kPOSITION_LEFT_I = 0;
         public static final int kPOSITION_MIDDLE_I = 1;
         public static final int kPOSITION_RIGHT_I = 2;
-        public static final int kPOSITION_HOME_I = 3;
-
-        public static final int kPATTERN_CROSSLINE_I = 0;
-        public static final int kPATTERN_SHOOT_I = 1;
-        public static final int kPATTERH_GATHER_I = 2;
         
-        public static final String kDEFAULT_PATTERN_NAME = "Default.Default";
-
-        public static final String kPOS_PATTERN_NAME[][] = {{"Left.Crossline", "Left.ShootCross", "Left.ShootGatther"},
-                                                            {"Mid.Crossline", "Mid.ShootCross", "Mid.ShootGather"},
-                                                            {"Right.Crossline", "Right.ShootCross", "Right.ShootGather"},
-                                                            {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
+        //public static final String kPOS_PATTERN_NAME[][] = {{"Left.Crossline", "Left.ShootCross", "Left.ShootGatther"},
+        //                                                    {"Mid.Crossline", "Mid.ShootCross", "Mid.ShootGather"},
+        //                                                    {"Right.Crossline", "Right.ShootCross", "Right.ShootGather"},
+        //                                                    {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
+        public static final String kPOS_PATTERN_NAME[] = {"Left", "Middle", "Right"};
     }
 }

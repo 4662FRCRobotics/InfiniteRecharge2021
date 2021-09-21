@@ -21,8 +21,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.libraries.ConsoleCommand;
+import frc.robot.libraries.ConsoleJoystick;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
+import frc.robot.Constants.ConsoleCommandConstants;
 
 
 /**
@@ -39,15 +41,16 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   public final Vision m_vision = new Vision();
   private final Intake m_intake = new Intake();
+  private final Climb m_climb = new Climb();
   private final ConsoleCommand m_consoleCommand = new ConsoleCommand();
 
   private final Joystick m_driveStick = new Joystick(0);
-  private final Joystick m_console = new Joystick(1);
+  private final ConsoleJoystick m_console = new ConsoleJoystick(1);
   
-  private final Climb m_climb = new Climb();
+  public final Command m_autoCmd = new Autonomous1(m_console, m_drive, m_hopper, m_intake, m_shooter, m_vision);
   
   //private final CommandBase m_AutoCmd = new StartAutoCmd(m_autonomous, m_drive, m_intake, m_shooter, m_hopper, m_vision, () -> m_stationConsole.getPOV(0),() -> m_stationConsole.getPOV(1));
-  private final CommandBase m_AutoCmd = null;
+  //private final CommandBase m_AutoCmd = null;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -90,8 +93,7 @@ public class RobotContainer {
     //create the auto commands
     // note that building path following during auto is significant elapsed time
     // possibly use a map (lob) array to store commands
-    createAutoCommands();
-
+   
   }
 
   
@@ -145,30 +147,30 @@ public class RobotContainer {
       new VisionLightOn(m_vision));
   }
 
-  public void createAutoCommands() {
     
-  }
-
-  public void getAutonomousName() {
-    // An ExampleCommand will run in autonomous
-    // lamda for pov - "() -> m_Console.getPOV(0)"
-    String commandName = m_consoleCommand.getPatternName(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
-    SmartDashboard.putString("Auto Name", commandName);
-  }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+  public void checkAutonomousSetting(ConsoleJoystick console) {
+    int iPosition = m_console.getROT_SW_0();
+    String patternName = "";
+    boolean bIsCommandFound = false;
+    if ( iPosition < ConsoleCommandConstants.kPOS_PATTERN_NAME.length) {
+      patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition];
+      bIsCommandFound = true;
+    }
+    SmartDashboard.putString("Auto Name", patternName);
+    SmartDashboard.putBoolean("Auto Found", bIsCommandFound);
+    SmartDashboard.putNumber("Auto Delay", m_console.getROT_SW_1());
+  }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // use the station console auto switches to determine the commmand to execute
-    String commandName = m_consoleCommand.getPatternName(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
-    SmartDashboard.putString("Auto Name", commandName);
-    Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
-    Boolean bIsCommandFound = autoCommand != null;
-    SmartDashboard.putBoolean("Auto Found", bIsCommandFound);
-    return autoCommand;
+    
+    //Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
+    //Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getROT_SW_0());
+    return m_autoCmd;
   }
 }
