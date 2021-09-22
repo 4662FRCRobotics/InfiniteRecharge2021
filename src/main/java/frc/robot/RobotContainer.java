@@ -9,18 +9,18 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController.Button;
+//import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+//import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
-import frc.robot.libraries.ConsoleCommand;
+//import frc.robot.libraries.ConsoleCommand;
 import frc.robot.libraries.ConsoleJoystick;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
@@ -42,7 +42,7 @@ public class RobotContainer {
   public final Vision m_vision = new Vision();
   private final Intake m_intake = new Intake();
   private final Climb m_climb = new Climb();
-  private final ConsoleCommand m_consoleCommand = new ConsoleCommand();
+  //private final ConsoleCommand m_consoleCommand = new ConsoleCommand();
 
   private final Joystick m_driveStick = new Joystick(0);
   private final ConsoleJoystick m_console = new ConsoleJoystick(1);
@@ -153,7 +153,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public void checkAutonomousSetting(ConsoleJoystick console) {
+  public void checkAutonomousSetting() {
     int iPosition = m_console.getROT_SW_0();
     String patternName = "";
     boolean bIsCommandFound = false;
