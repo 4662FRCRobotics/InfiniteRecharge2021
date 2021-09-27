@@ -63,16 +63,17 @@ public final class Constants {
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(kTRACK_WIDTH_M);
         
 
-        public static final double kTURN_ANGLE_P = 0.2;
-        public static final double kTURN_ANGLE_I = 0.0;
-        public static final double kTURN_ANGLE_D = 0.4;
-        public static final double kTURN_ANGLE_TOLERANCE = 2;
-        public static final double kTURN_ANGLE_TOLERANCE_DEG_PER_S = 10;
-
+        public static final double kDRIVE_P = 0.6;
+        public static final double kDRIVE_I = 0.0;
+        public static final double kDRIVE_D = 0.0;
+        public static final double kDRIVE_TOLERANCE = 2;
+        //public static final double kTURN_ANGLE_TOLERANCE_DEG_PER_S = 10;
+        /*
         public static final double kKEEP_HEADING_P =  0.2;
 		public static final double kKEEP_HEADING_I =  0.0;
 		public static final double kKEEP_HEADING_D = 0.4;
         public static final double kKEEP_HEADING_TOLERANCE =  1;
+        */
     }
 
     public static final class ClimberConstants{
@@ -143,7 +144,7 @@ public final class Constants {
     }
     public static final class IntakeConstants{
         public static final int kBELT_MOTOR_PORT = 11;
-        public static final double kBELT_MOTOR_SPEED = -0.3;
+        public static final double kBELT_MOTOR_SPEED = -0.25;   //was 3 9/26/2021
         public static final int kINTAKE_DOWN = 2;
         public static final int kINTAKE_UP = 3;
     } 
