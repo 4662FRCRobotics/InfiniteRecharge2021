@@ -35,20 +35,13 @@ public class ArcadeDrive extends CommandBase {
     m_turnRate = turnRate;
     addRequirements(m_drive);
   }
-  /*public double getVelocity(){
-    return m_driveStick.getY() * 2 / (m_driveStick.getThrottle());
-  }
-
-  public double getHeading(){
-    return m_driveStick.getTwist() * 2 / (m_driveStick.getThrottle());
-
-  }*/
-
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble() * 2 / (m_speed.getAsDouble() + 3), m_rotation.getAsDouble() * 2 / (m_turnRate.getAsDouble() + 3));
+    double speed = m_forward.getAsDouble() * (1 - ((m_speed.getAsDouble() + 1) * 0.25));
+    double rotation = m_rotation.getAsDouble() * (1- ((m_turnRate.getAsDouble() + 1) * 0.25));
+    m_drive.arcadeDrive(speed, rotation);
   }
 
 }

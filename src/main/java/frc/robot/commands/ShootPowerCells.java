@@ -11,37 +11,33 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
 
 public class ShootPowerCells extends CommandBase {
   /**
    * Creates a new ShootPowerCells.
    */
   private Shooter m_shooter;
-  //private Hopper m_hopper;
-  private Vision m_vision;
-  private Joystick m_driveStick;
+  private Joystick m_console;
+  private DoubleSupplier m_shootThrottle;
+  private DoubleSupplier m_upperOffset;
   private double m_throttle;
   private boolean m_bIsAutonomous;
-  public ShootPowerCells(Shooter shooter, Joystick driveStick) {
+  
+  public ShootPowerCells(Shooter shooter, DoubleSupplier shootThrottle, DoubleSupplier upperOffset) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
-    //m_vision = vision;
-    m_driveStick = driveStick;
+    //m_console = console;
+    m_shootThrottle = shootThrottle;
+    m_upperOffset = upperOffset;
     m_bIsAutonomous = false;
-    //addRequirements(m_vision);
     addRequirements(m_shooter);
   }
 
   public ShootPowerCells(Shooter shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    //m_hopper = hopper;
     m_shooter = shooter;
-    //m_vision = vision;
     m_bIsAutonomous = true;
-    //addRequirements(m_hopper);
     addRequirements(m_shooter);
   }
 
@@ -57,11 +53,11 @@ public class ShootPowerCells extends CommandBase {
     /*if (m_bIsAutonomous){
       m_throttle = 1;
     } else {
-      m_throttle = m_driveStick.getThrottle();
+      m_throttle = m_console.getZ();
     }
     */
     //if (m_vision.isHighGoalAligned()){
-      m_shooter.setMotorOn(m_driveStick.getThrottle());
+      m_shooter.setMotorOn(m_shootThrottle, m_upperOffset);
     //} else {
       //m_shooter.setMotorOff();
     //}

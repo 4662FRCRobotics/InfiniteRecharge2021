@@ -27,9 +27,9 @@ public final class Constants {
     }
 
     public static final class ButtonMappings {
-        
-        public static final int kSHOOTER = 1;
 
+        // joystick buttons
+        public static final int kSHOOTER = 1;
         public static final int kLOADER = 2;
         public static final int kCLOSELOADER = 3;
         public static final int kLOADERSPIT = 5;
@@ -37,10 +37,10 @@ public final class Constants {
         public static final int kCLIMB_DOWN = 4;
         public static final int kVISION_ON = 8;
         public static final int kVISION_DOWN = 7;
-        
-        public static final int kCLIMB_SWITCH = 9;
-
         public static final int kHARVESTER_REVERSE = 10;
+
+        // console buttons
+        public static final int kCLIMB_SWITCH = 1;
     }
 
     public static final class DriveConstants {
@@ -106,8 +106,21 @@ public final class Constants {
         public static final int kSHOOTER_MOTOR0_PORT = 9;
         public static final int kSHOOTER_MOTOR1_PORT = 10;
 
-        public static final double kSHOOTER_MAX_VOLTS = 11;
-        public static final double kSHOOTER_LOW_OFFSET = 0.95;
+        public static final int kSHOOTER_LIMIT_AMPS = 40;
+        public static final double kSHOOTER_RAMP_SEC = 0.5;
+
+        public static final double kSHOOTER_MAX_VOLTS = 9;
+        public static final double kSHOOTER_MIN_VOLTS = 5;
+        public static final double kSHOOTER_RANGE = kSHOOTER_MAX_VOLTS - kSHOOTER_MIN_VOLTS;
+        // check the Launcher Wheel Variables spreadsheet to see what these numbers do
+        // low offset is for formula 1
+       // public static final double kSHOOTER_LOW_OFFSET = 0.90;
+        // constants for formula 2 
+        //public static final double kUPPER_WHEEL_K2 = 14;
+        //public static final double kUPPER_WHEEL_K1 = 6;
+        // contstans for formula 3
+        //public static final double kUPPER_WHEEL_K3 = 3;
+        //public static final double kUPPER_WHEEL_K4 = 1;
 
         public static final int kSHOOTER_DIRECTION = -1;
     }
@@ -141,17 +154,11 @@ public final class Constants {
         public static final int kPOSITION_LEFT_I = 0;
         public static final int kPOSITION_MIDDLE_I = 1;
         public static final int kPOSITION_RIGHT_I = 2;
-        public static final int kPOSITION_HOME_I = 3;
-
-        public static final int kPATTERN_CROSSLINE_I = 0;
-        public static final int kPATTERN_SHOOT_I = 1;
-        public static final int kPATTERH_GATHER_I = 2;
         
-        public static final String kDEFAULT_PATTERN_NAME = "Default.Default";
-
-        public static final String kPOS_PATTERN_NAME[][] = {{"Left.Crossline", "Left.ShootCross", "Left.ShootGatther"},
-                                                            {"Mid.Crossline", "Mid.ShootCross", "Mid.ShootGather"},
-                                                            {"Right.Crossline", "Right.ShootCross", "Right.ShootGather"},
-                                                            {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
+        //public static final String kPOS_PATTERN_NAME[][] = {{"Left.Crossline", "Left.ShootCross", "Left.ShootGatther"},
+        //                                                    {"Mid.Crossline", "Mid.ShootCross", "Mid.ShootGather"},
+        //                                                    {"Right.Crossline", "Right.ShootCross", "Right.ShootGather"},
+        //                                                    {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
+        public static final String kPOS_PATTERN_NAME[] = {"Left", "Middle", "Right"};
     }
 }

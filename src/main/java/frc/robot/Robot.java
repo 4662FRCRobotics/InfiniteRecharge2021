@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.checkAutonomousSetting();
   }
   
 

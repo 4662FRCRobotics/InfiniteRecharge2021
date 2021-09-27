@@ -55,7 +55,7 @@ public class Climb extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Climb Brake", m_bIsClimbBrakeSet);
+   // SmartDashboard.putBoolean("Climb Brake", m_bIsClimbBrakeSet);
     //Display the state of the Climb brake(s) on SmartDashboard.
   }
   private void setClimbMotor(double climbSpeed){

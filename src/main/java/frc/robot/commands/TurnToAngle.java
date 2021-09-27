@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants.DriveConstants;
@@ -21,14 +23,14 @@ public class TurnToAngle extends PIDCommand {
   /**
    * Creates a new TurnToAngle.
    */
-  public TurnToAngle(double targetAngle, Drive drive) {
+  public TurnToAngle(DoubleSupplier targetAngle, Drive drive) {
     super(
         // The controller that the command will use
         new PIDController(DriveConstants.kTURN_ANGLE_P, DriveConstants.kTURN_ANGLE_I, DriveConstants.kTURN_ANGLE_D),
         // This should return the measurement
         drive::getHeading,
         // This should return the setpoint (can also be a constant)
-        targetAngle,
+        () -> targetAngle.getAsDouble(),
         // This uses the output
         output -> drive.arcadeDrive(0, output),
           // Use the output here
