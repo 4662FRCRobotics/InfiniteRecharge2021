@@ -10,21 +10,25 @@ import frc.robot.subsystems.Drive;
 public class AutoDriveDistance extends CommandBase {
 
   private double m_dDistance;
+  private double m_dRotation;
   private boolean m_bIsDashboard;
   private Drive m_drive;
   
   /** Creates a new AutoDriveDistance. */
-  public AutoDriveDistance(double distance, Drive drive) {
+  public AutoDriveDistance(double distance, double rotation, Drive drive) {
+    m_drive = drive; 
     m_dDistance = distance;
+    m_dRotation = rotation;
     m_bIsDashboard = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
   }
 
   public AutoDriveDistance(Drive drive) {
-    m_dDistance = m_drive.getDashboardDistance();
-    m_bIsDashboard = true;
     m_drive = drive;
+    m_dDistance = m_drive.getDashboardDistance();
+    m_dRotation = 0;
+    m_bIsDashboard = true;
     addRequirements(m_drive);
   }
 
@@ -41,7 +45,7 @@ public class AutoDriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.execDriveController();
+    m_drive.execDriveController(m_dRotation);
   }
 
   // Called once the command ends or is interrupted.

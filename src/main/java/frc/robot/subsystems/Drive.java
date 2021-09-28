@@ -217,7 +217,7 @@ public class Drive extends SubsystemBase {
     SmartDashboard.putNumber("DriveDistanceTolerance", m_dDriveDistanceTolerance);
     SmartDashboard.putNumber("DriveDistance", m_dDistance);
 
-    return m_dDistance;
+    return -m_dDistance;
   }
 
   public void resetPIDDriveController() {
@@ -226,13 +226,14 @@ public class Drive extends SubsystemBase {
   }
 
   public void initDriveController(double distance) {
-    m_drivePIDController.setSetpoint(distance);
+    double encoderDistance = distance / DriveConstants.kENCODER_DISTANCE_PER_PULSE_M;
+    m_drivePIDController.setSetpoint(encoderDistance);
     resetEncoders();
     m_drivePIDController.reset();
   }
   
-  public void execDriveController() {
-    arcadeDrive(MathUtil.clamp(m_drivePIDController.calculate(getDistance()),-1,1), 0);
+  public void execDriveController(double rotation) {
+    arcadeDrive(MathUtil.clamp(m_drivePIDController.calculate(getDistance()),-1,1), rotation);
   }
 
   public void endDriveController() {
