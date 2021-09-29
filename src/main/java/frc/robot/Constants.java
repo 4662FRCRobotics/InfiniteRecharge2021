@@ -162,4 +162,13 @@ public final class Constants {
         //                                                    {"Home.Funky", "Home.Pat2", "Home.Pat3", "Home.Pat4", "Home.Pat5"}};
         public static final String kPOS_PATTERN_NAME[] = {"Left", "Middle", "Right"};
     }
+
+    public static final class AutoConstants{
+        public static final double kDISTANCE_1_LEFT = 0.6;
+        public static final double kDISTANCE_1_MIDDLE = 0.75;
+        public static final double kDISTANCE_1_RIGHT = 0.6;
+        public static final double kLAUNCH_LOWER_VOLTAGE = 8.5;
+        public static final double kLAUNCH_UPPER_VOLTAGE = 7;
+        public static final double kLAUNCH_TIMER = 5;
+    }
 }

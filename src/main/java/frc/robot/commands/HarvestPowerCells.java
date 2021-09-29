@@ -59,5 +59,6 @@ public class HarvestPowerCells extends CommandBase {
   public boolean isFinished() {
     //return false;
     return m_hopper.isBallAtShooter();
+//    return !m_hopper.shouldIntakeTurnOn();
   }
 }

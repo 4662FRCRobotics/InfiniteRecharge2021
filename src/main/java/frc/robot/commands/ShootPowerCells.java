@@ -18,11 +18,13 @@ public class ShootPowerCells extends CommandBase {
    * Creates a new ShootPowerCells.
    */
   private Shooter m_shooter;
-  private Joystick m_console;
+  //private Joystick m_console;
   private DoubleSupplier m_shootThrottle;
   private DoubleSupplier m_upperOffset;
-  private double m_throttle;
-  private boolean m_bIsAutonomous;
+  //private double m_throttle;
+  private double m_lowerVolts;
+  private double m_upperVolts;
+  private boolean m_bIsManual;
   
   public ShootPowerCells(Shooter shooter, DoubleSupplier shootThrottle, DoubleSupplier upperOffset) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,38 +32,33 @@ public class ShootPowerCells extends CommandBase {
     //m_console = console;
     m_shootThrottle = shootThrottle;
     m_upperOffset = upperOffset;
-    m_bIsAutonomous = false;
+    m_bIsManual = true;
     addRequirements(m_shooter);
   }
 
-  public ShootPowerCells(Shooter shooter) {
+  public ShootPowerCells(Shooter shooter, double lowerVolts, double upperVolts) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
-    m_bIsAutonomous = true;
+    m_lowerVolts = lowerVolts;
+    m_upperVolts = upperVolts;
+    m_bIsManual = false;
     addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //m_hopper.retractBeltFrame();
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*if (m_bIsAutonomous){
-      m_throttle = 1;
-    } else {
-      m_throttle = m_console.getZ();
-    }
-    */
-    //if (m_vision.isHighGoalAligned()){
+    if (m_bIsManual){
       m_shooter.setMotorOn(m_shootThrottle, m_upperOffset);
-    //} else {
-      //m_shooter.setMotorOff();
-    //}
-    
+    } else {
+      m_shooter.setMotor(m_lowerVolts, m_upperVolts);
+    }
   
   }
 
