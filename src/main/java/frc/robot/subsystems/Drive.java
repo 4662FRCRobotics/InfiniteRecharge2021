@@ -102,10 +102,11 @@ public class Drive extends SubsystemBase {
 
     m_robotDrive = new DifferentialDrive(m_leftControlGroup, m_rightControlGroup);
 
-    m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
-    m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
-  //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
-  //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
+    m_leftEncoder1 = m_leftController1.getEncoder();
+    m_rightEncoder1 = m_rightController1.getEncoder();
+    //m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
+    //m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
+
     if (DriveConstants.kIS_DRIVE_INVERTED) {
       m_leftEncoderSign = -1;
       m_rightEncoderSign = 1;

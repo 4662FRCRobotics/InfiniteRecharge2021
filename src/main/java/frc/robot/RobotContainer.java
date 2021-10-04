@@ -110,8 +110,8 @@ public class RobotContainer {
     .whileHeld(
         new ParallelCommandGroup(
           new ShootPowerCells(m_shooter, () -> m_console.getZ(), () -> m_console.getThrottle()),
-          new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper)),
-          new VisionLightOn(m_vision)
+          new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper))
+//          new VisionLightOn(m_vision)
         )
       );
 

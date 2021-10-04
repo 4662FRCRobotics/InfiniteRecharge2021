@@ -57,8 +57,7 @@ public class HarvestPowerCells extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //return false;
-    return m_hopper.isBallAtShooter();
-//    return !m_hopper.shouldIntakeTurnOn();
+    //return m_hopper.isBallAtShooter();
+    return !m_hopper.shouldIntakeTurnOn(); // this should be true of both are false (full hopper)
   }
 }

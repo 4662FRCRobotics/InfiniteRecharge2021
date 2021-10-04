@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConsoleCommandConstants;
 import frc.robot.libraries.ConsoleJoystick;
@@ -43,6 +44,8 @@ public class Autonomous1 extends CommandBase {
 
   ParallelRaceGroup m_launch;
 
+  DeployHarvester m_deployHarvester;
+
   Command m_currentCommand;
   int m_waitCount;
 
@@ -58,17 +61,24 @@ public class Autonomous1 extends CommandBase {
     m_vision = vision;
     addRequirements(m_drive, m_hopper, m_intake, m_shooter, m_vision);
 
+    
     m_lDrive1 = new AutoDriveDistance(AutoConstants.kDISTANCE_1_LEFT, 0, m_drive);
     m_mDrive1 = new AutoDriveDistance(AutoConstants.kDISTANCE_1_MIDDLE, 0, m_drive);
     m_rDrive1 = new AutoDriveDistance(AutoConstants.kDISTANCE_1_RIGHT, 0, m_drive);
+    m_lDrive2 = new AutoDriveDistance(AutoConstants.kDISTANCE_2_LEFT, AutoConstants.kTURN_2_LEFT, m_drive);
+    m_mDrive2 = new AutoDriveDistance(AutoConstants.kDISTANCE_2_MIDDLE, AutoConstants.kTURN_2_MIDDLE, m_drive);
+    m_rDrive2 = new AutoDriveDistance(AutoConstants.kDISTANCE_2_RIGHT, AutoConstants.kTURN_2_RIGHT, m_drive);
 
     m_wait1 = new Wait(1);
     m_wait2 = new Wait(2);
     
     m_launch = new ParallelRaceGroup(
       new Wait(AutoConstants.kLAUNCH_TIMER),
-      new ShootPowerCells(m_shooter, AutoConstants.kLAUNCH_LOWER_VOLTAGE, AutoConstants.kLAUNCH_UPPER_VOLTAGE)
+      new ShootPowerCells(m_shooter, AutoConstants.kLAUNCH_LOWER_VOLTAGE, AutoConstants.kLAUNCH_UPPER_VOLTAGE),
+      new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper))
       );
+
+    m_deployHarvester = new DeployHarvester(m_hopper, m_intake);
 
   }
   
@@ -85,15 +95,19 @@ public class Autonomous1 extends CommandBase {
     switch (m_positionSwitch) {
       case 0: 
         m_drive1 = m_lDrive1;
+        m_drive2 = m_lDrive2;
         break;
       case 1:
         m_drive1 = m_mDrive1;
+        m_drive2 = m_mDrive2;
         break;
       case 2:
         m_drive1 = m_rDrive1;
+        m_drive2 = m_rDrive2;
         break;
       default:
         m_drive1 = m_mDrive1;
+        m_drive2 = m_mDrive2;
     }
 
     m_currentCommand = m_drive1;
@@ -121,6 +135,55 @@ public class Autonomous1 extends CommandBase {
     m_currentCommand.initialize();
   }
 
+  
+  private boolean startWait() {
+    boolean isFinished = true;
+    if (m_console.getROT_SW_1() > 0) {
+      dashboardCmd("Wait2");
+      switchCommand(m_wait2);
+      m_waitCount = 1;
+      isFinished = false;
+    } else {
+      isFinished = startLaunch();
+    }
+    return isFinished;
+  }
+
+  private boolean startLaunch() {
+    boolean isFinished = true;
+    if (m_console.cnsl_btn_2.get()) {
+      dashboardCmd("Launch 0");
+      switchCommand(m_launch);
+      isFinished = false;
+    } else {
+      isFinished = startDrive2();
+    }
+    return isFinished;
+  }
+
+  private boolean startDrive2() {
+    boolean isFinished = true;
+    if (m_console.cnsl_btn_3.get()) {
+      dashboardCmd("Drive 2");
+      switchCommand(m_drive2);
+      isFinished = false;
+    } else {
+      isFinished = startDeploy();
+    }
+    return isFinished;
+  }
+
+  private boolean startDeploy() {
+    boolean isFinished = true;
+    if (m_console.cnsl_btn_4.get()) {
+      dashboardCmd("Deploy");
+      switchCommand(m_deployHarvester);
+      isFinished = false;
+    } else {
+      isFinished = true;
+    }
+    return isFinished;
+  }
 
   // Returns true when the command should end.
   @Override
@@ -131,24 +194,13 @@ public class Autonomous1 extends CommandBase {
     }
 
     if (m_currentCommand == m_drive1) {
-      if (m_console.getROT_SW_1() > 0) {
-        dashboardCmd("Wait2");
-        switchCommand(m_wait2);
-        m_waitCount = 1;
-        return false;
-      } else {
-        dashboardCmd("Launch 0");
-        switchCommand(m_launch);
-        return false;
-      }
+      return startWait();
     }
 
     if (m_currentCommand == m_wait2
         || m_currentCommand == m_wait1) {
       if (m_waitCount >= m_console.getROT_SW_1()) {
-        dashboardCmd("Launch +");
-        switchCommand(m_launch);
-        return false;
+        return startLaunch();
       } else {
         dashboardCmd("Wait1+");
         switchCommand(m_wait1);
@@ -158,6 +210,16 @@ public class Autonomous1 extends CommandBase {
     }
 
     if (m_currentCommand == m_launch) {
+      // insert drive two command here
+      return startDrive2();
+    }
+
+    if (m_currentCommand == m_drive2) {
+      // insert deploy harvester command here
+      return startDeploy();
+    }
+
+    if (m_currentCommand == m_deployHarvester) {
       return true;
     }
 

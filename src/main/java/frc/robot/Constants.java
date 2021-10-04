@@ -164,11 +164,17 @@ public final class Constants {
     }
 
     public static final class AutoConstants{
-        public static final double kDISTANCE_1_LEFT = 0.6;
-        public static final double kDISTANCE_1_MIDDLE = 0.75;
-        public static final double kDISTANCE_1_RIGHT = 0.6;
+        public static final double kDISTANCE_1_LEFT = -0.6;
+        public static final double kDISTANCE_1_MIDDLE = -0.75;
+        public static final double kDISTANCE_1_RIGHT = -0.6;
+        public static final double kDISTANCE_2_LEFT = -1;
+        public static final double kDISTANCE_2_MIDDLE = -0.0;
+        public static final double kDISTANCE_2_RIGHT = -1.5;
+        public static final double kTURN_2_LEFT = -0.3;
+        public static final double kTURN_2_MIDDLE = -0.0;
+        public static final double kTURN_2_RIGHT = -0.4;
         public static final double kLAUNCH_LOWER_VOLTAGE = 8.5;
         public static final double kLAUNCH_UPPER_VOLTAGE = 7;
-        public static final double kLAUNCH_TIMER = 5;
+        public static final double kLAUNCH_TIMER = 6;
     }
 }
