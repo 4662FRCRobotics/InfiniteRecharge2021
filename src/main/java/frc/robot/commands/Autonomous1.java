@@ -18,6 +18,29 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
+/* Autonomous Command
+  This follows the standard Command/CommandBase pattern of initialize/exec/isFinished/end
+  The specific autonomous step commands are instantiated and constructed
+  Initialize starts the first command of the standard pattern and saves it as the currentCommand value
+  Exec invokes the currentCommand.exec
+  End invokes the currentCommand.end
+  IsFinished does the major logic of stepping the autonomous pattern individual commands 
+    in addition, checking appropriate switches (either rotary of digital) from the drive station console 
+    provides field-side state selection of the actual steps to be run.
+  Rotary switch 1 - sets the starting position of the robot as viewed from the team drive station
+    0 - left
+    1 - middle
+    2 - right
+    3 - default to middle pattern
+  Rotary switch 2 - sets a delay before starting to launch Power Cells at the target - let other alliance robots go first if they want
+    0 - no pause
+    1 - two seconds
+    2 - add one second per step from here on
+  Button 2 - true to launch
+  Button 3 - true to second drive
+  Button 4 - true to deploy harvester
+
+*/
 public class Autonomous1 extends CommandBase {
 
   ConsoleJoystick m_console;

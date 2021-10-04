@@ -22,8 +22,10 @@ public class DeployHarvester extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_hopper.extendBeltFrame();
-    m_intake.ArmDown();
+    if (m_hopper.shouldIntakeTurnOn()) {
+      m_hopper.extendBeltFrame();
+      m_intake.ArmDown();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
