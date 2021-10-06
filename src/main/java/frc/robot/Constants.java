@@ -63,9 +63,9 @@ public final class Constants {
         public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS = new DifferentialDriveKinematics(kTRACK_WIDTH_M);
         
 
-        public static final double kDRIVE_P = 0.6;
+        public static final double kDRIVE_P = 0.35;
         public static final double kDRIVE_I = 0.0;
-        public static final double kDRIVE_D = 0.0;
+        public static final double kDRIVE_D = 0.2;
         public static final double kDRIVE_TOLERANCE = 2;
         //public static final double kTURN_ANGLE_TOLERANCE_DEG_PER_S = 10;
         /*
@@ -167,14 +167,14 @@ public final class Constants {
         public static final double kDISTANCE_1_LEFT = -0.6;
         public static final double kDISTANCE_1_MIDDLE = -0.75;
         public static final double kDISTANCE_1_RIGHT = -0.6;
-        public static final double kDISTANCE_2_LEFT = -1;
+        public static final double kDISTANCE_2_LEFT = -1.5;
         public static final double kDISTANCE_2_MIDDLE = -0.0;
-        public static final double kDISTANCE_2_RIGHT = -1.5;
-        public static final double kTURN_2_LEFT = -0.3;
+        public static final double kDISTANCE_2_RIGHT = -.75;
+        public static final double kTURN_2_LEFT = .4;
         public static final double kTURN_2_MIDDLE = -0.0;
-        public static final double kTURN_2_RIGHT = -0.4;
+        public static final double kTURN_2_RIGHT = .5;
         public static final double kLAUNCH_LOWER_VOLTAGE = 8.5;
         public static final double kLAUNCH_UPPER_VOLTAGE = 7;
-        public static final double kLAUNCH_TIMER = 6;
+        public static final double kLAUNCH_TIMER = 4;
     }
 }
