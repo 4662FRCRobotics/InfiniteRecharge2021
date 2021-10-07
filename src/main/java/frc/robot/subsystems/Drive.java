@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants.DriveConstants;
+
+import java.util.function.DoubleSupplier;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
@@ -26,6 +28,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class Drive extends SubsystemBase {
   /**
@@ -57,7 +60,12 @@ public class Drive extends SubsystemBase {
   private double m_dAngle;
   private final DifferentialDriveOdometry m_driveOdometry;
 
-  //private PIDController m_keepHeading;
+  public PIDController m_drivePIDController;
+  private double m_dDriveDistanceP;
+	private double m_dDriveDistanceI;
+	private double m_dDriveDistanceD;
+	private double m_dDriveDistanceTolerance;
+	private double m_dDistance;
   
   private volatile double m_dSteeringHeading;
 
@@ -94,10 +102,11 @@ public class Drive extends SubsystemBase {
 
     m_robotDrive = new DifferentialDrive(m_leftControlGroup, m_rightControlGroup);
 
-    m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
-    m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
-  //  m_leftEncoder1 = new CANEncoder(m_leftController1, EncoderType.kHallSensor, 4096);
-  //  m_rightEncoder1 = new CANEncoder(m_rightController1, EncoderType.kHallSensor, 4096);
+    m_leftEncoder1 = m_leftController1.getEncoder();
+    m_rightEncoder1 = m_rightController1.getEncoder();
+    //m_leftEncoder1 = m_leftController1.getEncoder(EncoderType.kHallSensor, 4096);
+    //m_rightEncoder1 = m_rightController1.getEncoder(EncoderType.kHallSensor, 4096);
+
     if (DriveConstants.kIS_DRIVE_INVERTED) {
       m_leftEncoderSign = -1;
       m_rightEncoderSign = 1;
@@ -114,7 +123,14 @@ public class Drive extends SubsystemBase {
     SendableRegistry.addLW(m_robotDrive, "Drive Base");
     SendableRegistry.addLW(m_gyroAndCollison, "NavX");
 
-    //m_turnAngle = new PIDController(DriveConstants.kTURN_ANGLE_P, DriveConstants.kTURN_ANGLE_I, DriveConstants.kTURN_ANGLE_D);
+    m_dDriveDistanceP = DriveConstants.kDRIVE_P;
+    m_dDriveDistanceI = DriveConstants.kDRIVE_I;
+    m_dDriveDistanceD = DriveConstants.kDRIVE_D;
+    m_dDriveDistanceTolerance = DriveConstants.kDRIVE_TOLERANCE;
+    m_dDistance = getDashboardDistance();
+    m_drivePIDController = new PIDController(m_dDriveDistanceP, m_dDriveDistanceI, m_dDriveDistanceD);
+    m_drivePIDController.setTolerance(m_dDriveDistanceTolerance);
+ 
     m_dAngle = 0;
 
     //m_keepHeading = new PIDController(DriveConstants.kKEEP_HEADING_P, DriveConstants.kKEEP_HEADING_I, DriveConstants.kKEEP_HEADING_D);
@@ -187,5 +203,45 @@ public class Drive extends SubsystemBase {
     resetDrive();
   }
 
+  public double getDashboardDistance() {
 
+    m_dDistance = SmartDashboard.getNumber("DriveDistance", m_dDistance);
+    m_dDriveDistanceP = SmartDashboard.getNumber("DriveDistanceP", m_dDriveDistanceP);
+    m_dDriveDistanceI = SmartDashboard.getNumber("DriveDistanceI", m_dDriveDistanceI);
+    m_dDriveDistanceD = SmartDashboard.getNumber("DriveDistanceD", m_dDriveDistanceD);
+    m_dDriveDistanceTolerance = SmartDashboard.getNumber("DriveDistanceTolerance", m_dDriveDistanceTolerance);
+    m_dDistance = SmartDashboard.getNumber("DriveDistance", 2);
+    SmartDashboard.putNumber("DriveDistance", m_dDistance);
+    SmartDashboard.putNumber("DriveDistanceP", m_dDriveDistanceP);
+    SmartDashboard.putNumber("DriveDistanceI", m_dDriveDistanceI);
+    SmartDashboard.putNumber("DriveDistanceD", m_dDriveDistanceD);
+    SmartDashboard.putNumber("DriveDistanceTolerance", m_dDriveDistanceTolerance);
+    SmartDashboard.putNumber("DriveDistance", m_dDistance);
+
+    return -m_dDistance;
+  }
+
+  public void resetPIDDriveController() {
+    m_drivePIDController.setPID(m_dDriveDistanceP, m_dDriveDistanceI, m_dDriveDistanceD);
+    m_drivePIDController.setTolerance(m_dDriveDistanceTolerance);
+  }
+
+  public void initDriveController(double distance) {
+    double encoderDistance = distance / DriveConstants.kENCODER_DISTANCE_PER_PULSE_M;
+    m_drivePIDController.setSetpoint(encoderDistance);
+    resetEncoders();
+    m_drivePIDController.reset();
+  }
+  
+  public void execDriveController(double rotation) {
+    arcadeDrive(MathUtil.clamp(m_drivePIDController.calculate(getDistance()),-1,1), rotation);
+  }
+
+  public void endDriveController() {
+   arcadeDrive(0, 0);
+  }
+
+  public boolean isDriveAtSetpoint() {
+    return m_drivePIDController.atSetpoint();
+  }
 }

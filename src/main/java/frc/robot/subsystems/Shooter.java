@@ -53,7 +53,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("UpVolts", m_voltUpper);
   }  
   
-  private void setMotor(double voltLower, double voltUpper){
+  public void setMotor(double voltLower, double voltUpper){
 
     m_shooterMotor0.setVoltage(voltLower * ShooterConstants.kSHOOTER_DIRECTION);
     m_shooterMotor1.setVoltage(voltUpper * -ShooterConstants.kSHOOTER_DIRECTION);
