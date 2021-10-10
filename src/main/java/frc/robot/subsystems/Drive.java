@@ -234,7 +234,7 @@ public class Drive extends SubsystemBase {
   }
   
   public void execDriveController(double rotation) {
-    arcadeDrive(MathUtil.clamp(m_drivePIDController.calculate(getDistance()),-1,1), rotation);
+    arcadeDrive(MathUtil.clamp(m_drivePIDController.calculate(getDistance()),-DriveConstants.kDRIVE_PID_LIMIT, DriveConstants.kDRIVE_PID_LIMIT), rotation);
   }
 
   public void endDriveController() {
