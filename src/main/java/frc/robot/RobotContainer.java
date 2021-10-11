@@ -130,7 +130,7 @@ public class RobotContainer {
 
     new JoystickButton(m_driveStick, ButtonMappings.kCLOSELOADER)
     .whenPressed(
-      new CloseLoader(m_hopper, m_intake)
+      new RetractHarvester(m_hopper, m_intake)
     );
 
     new JoystickButton(m_driveStick, ButtonMappings.kVISION_ON).whileHeld(

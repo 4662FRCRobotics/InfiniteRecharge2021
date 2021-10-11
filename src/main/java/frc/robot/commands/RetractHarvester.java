@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 
-public class CloseLoader extends CommandBase {
+public class RetractHarvester extends CommandBase {
 
   Hopper m_hopper;
   Intake m_intake;
-  /** Creates a new CloseLoader. */
-  public CloseLoader(Hopper hopper, Intake intake) {
+  /** Creates a new RetractHarvester
+   *. */
+  public RetractHarvester
+(Hopper hopper, Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_hopper = hopper;
     m_intake = intake;
