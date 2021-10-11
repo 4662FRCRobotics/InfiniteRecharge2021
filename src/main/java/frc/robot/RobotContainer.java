@@ -7,20 +7,15 @@
 
 package frc.robot;
 
-//import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
-//import frc.robot.libraries.ConsoleCommand;
 import frc.robot.libraries.ConsoleJoystick;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
@@ -36,22 +31,17 @@ import frc.robot.Constants.ConsoleCommandConstants;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drive m_drive = new Drive();
-  //private final Autonomous m_autonomous = new Autonomous();
   private final Hopper m_hopper = new Hopper();
   private final Shooter m_shooter = new Shooter();
   public final Vision m_vision = new Vision();
   private final Intake m_intake = new Intake();
   private final Climb m_climb = new Climb();
-  //private final ConsoleCommand m_consoleCommand = new ConsoleCommand();
-
+ 
   private final Joystick m_driveStick = new Joystick(0);
   private final ConsoleJoystick m_console = new ConsoleJoystick(1);
   
   public final Command m_autoCmd = new Autonomous1(m_console, m_drive, m_hopper, m_intake, m_shooter, m_vision);
   
-  //private final CommandBase m_AutoCmd = new StartAutoCmd(m_autonomous, m_drive, m_intake, m_shooter, m_hopper, m_vision, () -> m_stationConsole.getPOV(0),() -> m_stationConsole.getPOV(1));
-  //private final CommandBase m_AutoCmd = null;
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
