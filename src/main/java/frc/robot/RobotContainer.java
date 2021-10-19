@@ -51,8 +51,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    //m_driveStick = new Joystick(0);
-
     m_drive.setDefaultCommand(
       // A split-stick arcade command, with forward/backward controlled by the left
       // hand, and turning controlled by the right.
@@ -61,8 +59,9 @@ public class RobotContainer {
         () -> m_driveStick.getY(),
         () -> m_driveStick.getTwist(),
         () -> m_driveStick.getThrottle(),
-        () -> m_console.getX()));
-
+        () -> m_console.getX()
+      )
+    );
       
     m_vision.setDefaultCommand(
       new FwdCameraTilt(m_vision,
@@ -75,7 +74,7 @@ public class RobotContainer {
       () -> m_console.getZ(),
       () -> m_console.getThrottle()
       )
-    );;
+    );
 
     m_hopper.retractBeltFrame();
     m_intake.ArmUp();
@@ -98,12 +97,12 @@ public class RobotContainer {
   
     new JoystickButton(m_driveStick, ButtonMappings.kSHOOTER)
     .whileHeld(
-        new ParallelCommandGroup(
-          new ShootPowerCells(m_shooter, () -> m_console.getZ(), () -> m_console.getThrottle()),
-          new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper))
+      new ParallelCommandGroup(
+        new ShootPowerCells(m_shooter, () -> m_console.getZ(), () -> m_console.getThrottle()),
+        new SequentialCommandGroup(new Wait(1), new ShootHopperFeed(m_hopper))
 //          new VisionLightOn(m_vision)
-        )
-      );
+      )
+    );
 
     // conditional command requires a true on the second attribute for the command to run
     // this is a "deadman" two button to raise the climber - reduce risk of accidental lift before intended
@@ -112,8 +111,9 @@ public class RobotContainer {
       new ConditionalCommand(
         new ClimbUp(m_climb),
         new InstantCommand(),
-        () -> m_console.getRawButton(ButtonMappings.kCLIMB_SWITCH))
-      );
+        () -> m_console.getRawButton(ButtonMappings.kCLIMB_SWITCH)
+      )
+    );
     
     new JoystickButton(m_driveStick, ButtonMappings.kCLIMB_DOWN).whileHeld(
       new ClimbDown(m_climb));
