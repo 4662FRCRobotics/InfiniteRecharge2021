@@ -152,12 +152,57 @@ public class Autonomous1 extends CommandBase {
     dashboardCmd("Auto Done");
   }
 
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+
+    if (m_currentCommand.isFinished() == false) {
+      return false;
+    } else {
+      return stepNextCommand();
+    }
+  }
+
+  public boolean stepNextCommand() {
+
+    if (m_currentCommand == m_drive1) {
+      return startWait();
+    }
+
+    if (m_currentCommand == m_wait2
+        || m_currentCommand == m_wait1) {
+      if (m_waitCount >= m_console.getROT_SW_1()) {
+        return startLaunch();
+      } else {
+        dashboardCmd("Wait1+");
+        switchCommand(m_wait1);
+        m_waitCount++;
+        return false;
+      }
+    }
+
+    if (m_currentCommand == m_launch) {
+      // insert drive two command here
+      return startDrive2();
+    }
+
+    if (m_currentCommand == m_drive2) {
+      // insert deploy harvester command here
+      return startDeploy();
+    }
+
+    if (m_currentCommand == m_deployHarvester) {
+      return true;
+    }
+
+    return true;
+  }
+
   private void switchCommand(final Command cmd) {
     m_currentCommand.end(false);
     m_currentCommand = cmd;
     m_currentCommand.initialize();
   }
-
   
   private boolean startWait() {
     boolean isFinished = true;
@@ -208,44 +253,4 @@ public class Autonomous1 extends CommandBase {
     return isFinished;
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-
-    if (m_currentCommand.isFinished() == false) {
-      return false;
-    }
-
-    if (m_currentCommand == m_drive1) {
-      return startWait();
-    }
-
-    if (m_currentCommand == m_wait2
-        || m_currentCommand == m_wait1) {
-      if (m_waitCount >= m_console.getROT_SW_1()) {
-        return startLaunch();
-      } else {
-        dashboardCmd("Wait1+");
-        switchCommand(m_wait1);
-        m_waitCount++;
-        return false;
-      }
-    }
-
-    if (m_currentCommand == m_launch) {
-      // insert drive two command here
-      return startDrive2();
-    }
-
-    if (m_currentCommand == m_drive2) {
-      // insert deploy harvester command here
-      return startDeploy();
-    }
-
-    if (m_currentCommand == m_deployHarvester) {
-      return true;
-    }
-
-    return true;
-  }
 }
