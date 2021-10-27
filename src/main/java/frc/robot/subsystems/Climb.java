@@ -8,16 +8,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.ParamEnum;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteLimitSwitchSource;
 
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -25,14 +21,14 @@ public class Climb extends SubsystemBase {
 
   private Servo m_climbBrake;
   
-  private boolean m_bIsClimbBrakeSet;
+  //private boolean m_bIsClimbBrakeSet;
   private WPI_TalonSRX m_ClimbMotorFwd;
   private WPI_TalonSRX m_ClimbMotorInv;
   /**
    * Creates a new Climb.
    */
   public Climb() {
-    m_bIsClimbBrakeSet = true;
+    //m_bIsClimbBrakeSet = true;
     m_ClimbMotorFwd = new WPI_TalonSRX(ClimberConstants.kCLIMBER_FWD_PORT);
     m_ClimbMotorInv = new WPI_TalonSRX(ClimberConstants.kCLIMBER_INV_PORT);
     m_ClimbMotorFwd.configFactoryDefault();
@@ -59,7 +55,6 @@ public class Climb extends SubsystemBase {
     //Display the state of the Climb brake(s) on SmartDashboard.
   }
   private void setClimbMotor(double climbSpeed){
-    SmartDashboard.putNumber("Climb Speed", climbSpeed);
     m_ClimbMotorFwd.set(climbSpeed);
     //Display the speed of the Climb motors on SmartDashboard.
   }

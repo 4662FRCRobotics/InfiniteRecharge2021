@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.ConsoleCommandConstants;
 import frc.robot.libraries.ConsoleJoystick;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Hopper;
@@ -71,7 +70,6 @@ public class Autonomous1 extends CommandBase {
 
   Command m_currentCommand;
   int m_waitCount;
-
 
   /** Creates a new Autonomous1. */
   public Autonomous1(ConsoleJoystick console, Drive drive, Hopper hopper, Intake intake, Shooter shooter, Vision vision) {
@@ -156,11 +154,13 @@ public class Autonomous1 extends CommandBase {
   @Override
   public boolean isFinished() {
 
+    boolean areWeThereYet = true;
     if (m_currentCommand.isFinished() == false) {
-      return false;
+      areWeThereYet = false;
     } else {
-      return stepNextCommand();
+      areWeThereYet = stepNextCommand();
     }
+    return areWeThereYet;
   }
 
   public boolean stepNextCommand() {

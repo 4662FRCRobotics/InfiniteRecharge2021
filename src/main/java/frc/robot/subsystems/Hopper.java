@@ -20,7 +20,6 @@ import frc.robot.Constants.HopperConstants;
 public class Hopper extends SubsystemBase{
   
   private WPI_TalonSRX m_hopperMotor;
-  private boolean m_bIsHopperMotorOn;
   private DigitalInput m_shooterSensor;
   private DigitalInput m_intakeSensor;
   private DoubleSolenoid m_beltFramePiston;
@@ -38,7 +37,6 @@ public class Hopper extends SubsystemBase{
 
     m_bIsAtShooter = false;
     m_bIsAtIntake = false;
-    m_bIsHopperMotorOn = false;
   }
 
   @Override
@@ -58,19 +56,14 @@ public class Hopper extends SubsystemBase{
 
   public void setHopperMotorIntake() {
     m_hopperMotor.set(HopperConstants.kHOPPER_INTAKE_SPEED);
-    m_bIsHopperMotorOn = true;
-    //SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
   }
 
   public void setHopperMotorLaunch() {
     m_hopperMotor.set(HopperConstants.kHOPPER_LAUNCH_SPEED);
-    m_bIsHopperMotorOn = true;
   }
 
   public void setHopperMotorOff() {
     m_hopperMotor.stopMotor();
-    m_bIsHopperMotorOn = false;
-    //SmartDashboard.putBoolean("Is Hopper Motor On", m_bIsHopperMotorOn);
   }
 
   public void extendBeltFrame() {
@@ -81,10 +74,6 @@ public class Hopper extends SubsystemBase{
     m_beltFramePiston.set(Value.kReverse);
   }
   
-  //public boolean isHopperAligned(){
-  //  return true;
-  //}
-
   public boolean isBallAtShooter() {
     return !m_bIsAtShooter;
   }
@@ -93,9 +82,6 @@ public class Hopper extends SubsystemBase{
     return (m_bIsAtShooter || m_bIsAtIntake);
   }
 
-  //public boolean shouldHopperFeed(){
-  //  return m_bShooterSensorReading;
-  //}
 }
 
   

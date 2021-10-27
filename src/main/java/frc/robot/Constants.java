@@ -165,6 +165,7 @@ public final class Constants {
     }
 
     public static final class AutoConstants{
+
         public static final double kDISTANCE_1_LEFT = -0.35;
         public static final double kDISTANCE_1_MIDDLE = -0.45;
         public static final double kDISTANCE_1_RIGHT = -0.35;
@@ -177,5 +178,7 @@ public final class Constants {
         public static final double kLAUNCH_LOWER_VOLTAGE = 8.0;
         public static final double kLAUNCH_UPPER_VOLTAGE = 5.75;
         public static final double kLAUNCH_TIMER = 4;
+
+        
     }
 }

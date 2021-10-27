@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
+import frc.robot.libraries.AutoPosition;
+import frc.robot.libraries.AutonomousCommand;
 import frc.robot.libraries.ConsoleJoystick;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ButtonMappings;
@@ -41,6 +43,7 @@ public class RobotContainer {
   private final ConsoleJoystick m_console = new ConsoleJoystick(1);
   
   public final Command m_autoCmd = new Autonomous1(m_console, m_drive, m_hopper, m_intake, m_shooter, m_vision);
+  private final AutonomousCommand m_autoCommand = new AutonomousCommand();
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -82,7 +85,10 @@ public class RobotContainer {
     //create the auto commands
     // note that building path following during auto is significant elapsed time
     // possibly use a map (lob) array to store commands
-   
+    m_autoCommand.setDefaultOption(AutoPosition.MIDDLE.name(), new AutoControl(AutoPosition.MIDDLE));
+    m_autoCommand.addOption(AutoPosition.LEFT.name(), new AutoControl(AutoPosition.LEFT));
+    m_autoCommand.addOption(AutoPosition.RIGHT.name(), new AutoControl(AutoPosition.RIGHT));
+
   }
 
   
@@ -154,16 +160,15 @@ public class RobotContainer {
       patternName = ConsoleCommandConstants.kPOS_PATTERN_NAME[iPosition];
       bIsCommandFound = true;
     }
-    SmartDashboard.putString("Auto Name", patternName);
+    String patternName2 = AutoPosition.getByIndex(iPosition).name();
+    
+    SmartDashboard.putString("Auto Name", patternName + patternName2);
     SmartDashboard.putBoolean("Auto Found", bIsCommandFound);
     SmartDashboard.putNumber("Auto Delay", m_console.getROT_SW_1());
   }
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     // use the station console auto switches to determine the commmand to execute
-    
-    //Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getPOV(0), () -> m_console.getPOV(1));
-    //Command autoCommand = m_consoleCommand.getSelected(() -> m_console.getROT_SW_0());
     return m_autoCmd;
   }
 }
